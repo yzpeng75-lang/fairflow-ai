@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.analysis_engine import UnifiedAnalysisRequest, UnifiedAnalysisResult, analyze_checkout
 from app.detectors.choice_guard import ChoiceGuardRequest, ChoiceGuardResult, analyze_choice_guard
 from app.detectors.price_trace import PriceTraceRequest, PriceTraceResult, analyze_price_trace
 from app.detectors.renewal_lens import RenewalLensRequest, RenewalLensResult, analyze_renewal_lens
@@ -64,3 +65,8 @@ def choice_guard(request: ChoiceGuardRequest) -> ChoiceGuardResult:
 @app.post("/api/v1/analyze/renewal-lens", response_model=RenewalLensResult)
 def renewal_lens(request: RenewalLensRequest) -> RenewalLensResult:
     return analyze_renewal_lens(request)
+
+
+@app.post("/api/v1/analyze/checkout", response_model=UnifiedAnalysisResult)
+def checkout_analysis(request: UnifiedAnalysisRequest) -> UnifiedAnalysisResult:
+    return analyze_checkout(request)

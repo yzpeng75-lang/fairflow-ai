@@ -1,0 +1,56 @@
+.risk-summary {
+  margin-top: 28px;
+  padding: 22px;
+  border: 1px solid #ccd5d0;
+  background: #f6faf7;
+}
+
+.risk-summary.high,
+.risk-summary.critical {
+  border-color: #d69a85;
+  background: #fff4ef;
+}
+
+.risk-summary.moderate {
+  border-color: #d8c98d;
+  background: #fffbee;
+}
+
+.risk-summary-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-end;
+}
+
+.risk-summary-top span {
+  color: #66736b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.risk-summary-top strong {
+  font: 700 22px "Manrope", sans-serif;
+  text-transform: capitalize;
+}
+
+.risk-meter {
+  height: 6px;
+  margin-top: 14px;
+  background: #dfe5e1;
+}
+
+.risk-meter span {
+  display: block;
+  height: 100%;
+  background: #be5738;
+  transition: width .2s ease;
+}
+
+.risk-summary p {
+  margin: 12px 0 0;
+  color: #59665f;
+  font-size: 13px;
+  line-height: 1.5;
+}

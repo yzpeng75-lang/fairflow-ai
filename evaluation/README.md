@@ -30,4 +30,14 @@ python evaluation/evaluate_renewal_lens.py
 
 The script writes `reports/day07_renewal_lens.json`. RenewalLens treats automatic renewal disclosed at the commitment step as a delayed disclosure. If no renewal text is observable, it requests review instead of claiming that the flow is safe.
 
+## Unified engine (Day 8)
+
+Run all three applicable detectors across the full 60-flow release:
+
+```powershell
+python evaluation/evaluate_unified_engine.py
+```
+
+The script writes `reports/day08_unified_engine.json` with four-class metrics, a confusion matrix, and the risk-score distribution. The fixed scoring policy is documented in `docs/RISK_SCORING.md`.
+
 Evaluation work begins after the dataset schema is frozen. The final report will compare rules, text-only classification, and full-flow analysis using held-out page templates.

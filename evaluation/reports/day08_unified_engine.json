@@ -1,0 +1,63 @@
+{
+  "engine": "FairFlow-Engine-v0.1",
+  "dataset": "FairFlow-Bench Day 4 full controlled release",
+  "scope": "synthetic controlled benchmark only",
+  "examples": 60,
+  "accuracy": 1.0,
+  "macro_f1": 1.0,
+  "per_class": {
+    "normal": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "hidden_fee": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "preselected_addon": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "trial_to_paid": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "confusion_matrix": {
+    "normal": {
+      "normal": 30,
+      "hidden_fee": 0,
+      "preselected_addon": 0,
+      "trial_to_paid": 0
+    },
+    "hidden_fee": {
+      "normal": 0,
+      "hidden_fee": 10,
+      "preselected_addon": 0,
+      "trial_to_paid": 0
+    },
+    "preselected_addon": {
+      "normal": 0,
+      "hidden_fee": 0,
+      "preselected_addon": 10,
+      "trial_to_paid": 0
+    },
+    "trial_to_paid": {
+      "normal": 0,
+      "hidden_fee": 0,
+      "preselected_addon": 0,
+      "trial_to_paid": 10
+    }
+  },
+  "risk_score_distribution": {
+    "0": 30,
+    "30": 10,
+    "40": 10,
+    "45": 10
+  },
+  "warning": "These results do not establish performance on unfamiliar real websites."
+}

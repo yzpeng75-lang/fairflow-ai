@@ -39,3 +39,7 @@ At the cart step, ChoiceGuard reports whether an optional paid control was selec
 ## Live RenewalLens preview
 
 Trial flows display whether the automatic renewal price was disclosed early or only at the final commitment step. Before any terms are visible, the panel explicitly reports uncertainty rather than presenting missing evidence as a clean result.
+
+## Unified risk preview
+
+The main checkout panel combines confirmed findings into a 0–100 score and a clear, moderate, high, or critical level. It also distinguishes a clean result on observed evidence from a flow that still needs review.

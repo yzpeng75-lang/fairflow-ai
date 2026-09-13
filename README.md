@@ -78,3 +78,4 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - Day 5: PriceTrace hidden-fee detector, evidence API, live trace UI, and controlled benchmark evaluation.
 - Day 6: ChoiceGuard preselected-add-on detector, interaction provenance, live evidence UI, and controlled evaluation.
 - Day 7: RenewalLens delayed-renewal detector, uncertainty handling, live evidence UI, and controlled evaluation.
+- Day 8: unified analysis engine with auditable risk scoring, combined evidence, and four-class evaluation.
