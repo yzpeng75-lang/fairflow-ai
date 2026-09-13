@@ -83,3 +83,4 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - Day 10: end-to-end evidence-to-report pipeline with stable report IDs and actionable, neutral guidance.
 - Day 11: trainable text baseline and template-disjoint ablation comparing final-page, sequence, and full-flow methods.
 - Day 12: privacy, retention, timeout, security-header, accessibility, and failure-recovery hardening.
+- Day 13: Devpost story, two-minute demo script, judging map, architecture, cover art, and reproducibility guide.
