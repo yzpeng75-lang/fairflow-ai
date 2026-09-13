@@ -77,3 +77,4 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - Day 4: reproducible benchmark release with 60 flows, 240 page states, and template-disjoint splits.
 - Day 5: PriceTrace hidden-fee detector, evidence API, live trace UI, and controlled benchmark evaluation.
 - Day 6: ChoiceGuard preselected-add-on detector, interaction provenance, live evidence UI, and controlled evaluation.
+- Day 7: RenewalLens delayed-renewal detector, uncertainty handling, live evidence UI, and controlled evaluation.

@@ -1,0 +1,40 @@
+.renewal-lens {
+  margin-top: 10px;
+  padding: 16px;
+  border: 1px solid #cdd7d1;
+  background: #f5faf7;
+}
+
+.renewal-lens.review {
+  border-color: #d8c98d;
+  background: #fffbee;
+}
+
+.renewal-lens.alert {
+  border-color: #d8a08d;
+  background: #fff3ee;
+}
+
+.renewal-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: .09em;
+}
+
+.renewal-heading strong {
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.renewal-lens.alert .renewal-heading strong {
+  color: #a13f25;
+}
+
+.renewal-lens p {
+  margin: 10px 0 0;
+  color: #647168;
+  font-size: 11px;
+  line-height: 1.45;
+}
