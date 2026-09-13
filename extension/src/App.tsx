@@ -66,8 +66,8 @@ export default function App() {
 
   const excludedCount = evidence.reduce((sum, item) => sum + item.excludedSensitiveFieldCount, 0);
 
-  return <main className="shell">
-    <header><div className="brand"><span>F</span><div>FairFlow AI<small>Evidence capture · Day 09</small></div></div><div className={`status ${apiState}`}>{apiState}</div></header>
+  return <main className="shell" aria-busy={busy}>
+    <header><div className="brand"><span aria-hidden="true">F</span><div>FairFlow AI<small>Evidence capture · Release candidate</small></div></div><div className={`status ${apiState}`} role="status" aria-live="polite">Service {apiState}</div></header>
 
     <section className="intro"><p className="eyebrow">PRIVACY-FIRST CHECKOUT AUDIT</p><h1>Capture the change,<br />not the customer.</h1><p>At each checkout step, capture only visible totals, fees, paid choices, and renewal terms.</p></section>
 
@@ -75,7 +75,7 @@ export default function App() {
     {error && <div className="error" role="alert">{error}</div>}
 
     <section className="controls">
-      <button className="primary" onClick={capture} disabled={busy || !extensionMode}>Capture current step</button>
+      <button className="primary" onClick={capture} disabled={busy || !extensionMode}>{busy ? "Working…" : "Capture current step"}</button>
       <button onClick={analyze} disabled={busy || evidence.length < 2 || apiState !== "online"}>Analyze evidence</button>
       <button className="text-button" onClick={reset} disabled={busy || evidence.length === 0}>Clear</button>
     </section>
@@ -87,8 +87,8 @@ export default function App() {
 
     <section className="privacy-card"><strong>Sensitive values excluded</strong><p>Names, email, addresses, passwords, card fields, page URLs, and form values are never captured.</p><small>{excludedCount} sensitive field appearances skipped across the stored snapshots.</small></section>
 
-    {result && <section className={`result ${result.risk_level}`}><div className="score"><span>FAIRFLOW RISK</span><strong>{result.risk_score}<small>/100</small></strong></div><div className="meter"><span style={{ width: `${result.risk_score}%` }} /></div><h2>{result.risk_level}</h2><p>{result.summary}</p>{result.findings.map((finding) => <article key={finding.risk_type}><strong>{finding.title}</strong><p>{finding.evidence}</p><small>{finding.risk_type.replaceAll("_", " ")} · confidence {Math.round(finding.confidence * 100)}%</small></article>)}{result.needs_review && <div className="review-note">Some evidence is incomplete and needs review.</div>}</section>}
+    {result && <section className={`result ${result.risk_level}`} aria-live="polite"><div className="score"><span>FAIRFLOW RISK</span><strong>{result.risk_score}<small>/100</small></strong></div><div className="meter" role="progressbar" aria-label="FairFlow risk score" aria-valuemin={0} aria-valuemax={100} aria-valuenow={result.risk_score}><span style={{ width: `${result.risk_score}%` }} /></div><h2>{result.risk_level}</h2><p>{result.summary}</p>{result.findings.map((finding) => <article key={finding.risk_type}><strong>{finding.title}</strong><p>{finding.evidence}</p><p className="action-copy">Next: {finding.recommended_action}</p><small>{finding.risk_type.replaceAll("_", " ")} · confidence {Math.round(finding.confidence * 100)}%</small></article>)}{result.needs_review && <div className="review-note">Some evidence is incomplete and needs review.</div>}</section>}
 
-    <footer><span>Stored locally</span><span>No automatic clicks</span><span>Evidence only</span></footer>
+    <footer><span>Local · 24h retention</span><span>No automatic clicks</span><span>Evidence only</span></footer>
   </main>;
 }

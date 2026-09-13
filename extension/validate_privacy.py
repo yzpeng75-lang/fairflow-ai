@@ -13,12 +13,13 @@ assert set(manifest["permissions"]) == {"activeTab", "scripting", "storage"}
 assert manifest["host_permissions"] == ["http://127.0.0.1:8000/*"]
 assert "content_scripts" not in manifest
 assert "<all_urls>" not in json.dumps(manifest)
+assert manifest["content_security_policy"]["extension_pages"] == "script-src 'self'; object-src 'self'"
 assert ".value" not in capture
 assert "location.href" not in capture
 for required_filter in ("type='password'", "type='email'", "autocomplete*='cc-'", "data-ff-sensitive"):
     assert required_filter in capture
 assert "http://127.0.0.1:8000/api/v1/analyze/checkout" in analysis
+assert "AbortController" in analysis
 
 print("FairFlow extension privacy validation passed")
 print("No broad host access, persistent content script, URL path, or form values collected")
-

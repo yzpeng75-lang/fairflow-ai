@@ -40,4 +40,12 @@ python evaluation/evaluate_unified_engine.py
 
 The script writes `reports/day08_unified_engine.json` with four-class metrics, a confusion matrix, and the risk-score distribution. The fixed scoring policy is documented in `docs/RISK_SCORING.md`.
 
+## Trainable baseline and ablation (Day 11)
+
+```powershell
+python evaluation/evaluate_ablation.py
+```
+
+This trains a dependency-free multinomial Naive Bayes text baseline on six templates and tests on two unseen templates. It compares final-page text, sequence text, final-page rules, and full-flow structured analysis. The generated report includes every prediction, not only aggregate scores.
+
 Evaluation work begins after the dataset schema is frozen. The final report will compare rules, text-only classification, and full-flow analysis using held-out page templates.

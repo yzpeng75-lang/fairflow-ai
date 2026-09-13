@@ -36,18 +36,26 @@ export async function captureActiveTab(): Promise<PageEvidence> {
 }
 
 const STORAGE_KEY = "fairflow-current-audit";
+const RETENTION_MS = 24 * 60 * 60 * 1000;
+const MAX_SNAPSHOTS = 20;
 
 export async function loadEvidence(): Promise<PageEvidence[]> {
   const chrome = api();
   if (!chrome) return [];
   const stored = await chrome.storage.local.get(STORAGE_KEY);
-  return Array.isArray(stored[STORAGE_KEY]) ? stored[STORAGE_KEY] as PageEvidence[] : [];
+  if (!Array.isArray(stored[STORAGE_KEY])) return [];
+  const cutoff = Date.now() - RETENTION_MS;
+  const fresh = (stored[STORAGE_KEY] as PageEvidence[]).filter((item) =>
+    item?.schemaVersion === "1.0" && Number.isFinite(Date.parse(item.capturedAt)) && Date.parse(item.capturedAt) >= cutoff,
+  ).slice(-MAX_SNAPSHOTS);
+  if (fresh.length !== stored[STORAGE_KEY].length) await chrome.storage.local.set({ [STORAGE_KEY]: fresh });
+  return fresh;
 }
 
 export async function saveEvidence(items: PageEvidence[]): Promise<void> {
   const chrome = api();
   if (!chrome) return;
-  await chrome.storage.local.set({ [STORAGE_KEY]: items });
+  await chrome.storage.local.set({ [STORAGE_KEY]: items.slice(-MAX_SNAPSHOTS) });
 }
 
 export async function clearEvidence(): Promise<void> {
@@ -55,4 +63,3 @@ export async function clearEvidence(): Promise<void> {
   if (!chrome) return;
   await chrome.storage.local.remove(STORAGE_KEY);
 }
-

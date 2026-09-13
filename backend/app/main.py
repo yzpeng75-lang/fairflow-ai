@@ -1,10 +1,12 @@
 from fastapi import FastAPI
+from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.analysis_engine import UnifiedAnalysisRequest, UnifiedAnalysisResult, analyze_checkout
 from app.detectors.choice_guard import ChoiceGuardRequest, ChoiceGuardResult, analyze_choice_guard
 from app.detectors.price_trace import PriceTraceRequest, PriceTraceResult, analyze_price_trace
 from app.detectors.renewal_lens import RenewalLensRequest, RenewalLensResult, analyze_renewal_lens
+from app.reporting import AuditReport, build_audit_report
 
 
 app = FastAPI(
@@ -26,6 +28,15 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )
+
+
+@app.middleware("http")
+async def privacy_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    return response
 
 
 @app.get("/health")
@@ -71,3 +82,8 @@ def renewal_lens(request: RenewalLensRequest) -> RenewalLensResult:
 @app.post("/api/v1/analyze/checkout", response_model=UnifiedAnalysisResult)
 def checkout_analysis(request: UnifiedAnalysisRequest) -> UnifiedAnalysisResult:
     return analyze_checkout(request)
+
+
+@app.post("/api/v1/reports/from-analysis", response_model=AuditReport)
+def report_from_analysis(result: UnifiedAnalysisResult) -> AuditReport:
+    return build_audit_report(result)

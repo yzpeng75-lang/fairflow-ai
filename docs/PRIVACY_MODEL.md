@@ -25,7 +25,7 @@ FairFlow runs only after an explicit user action. The injected extractor reads a
 
 ## Permission design
 
-The extension uses `activeTab` instead of permanent access to every site. It has no persistent content script and can contact only the local FairFlow API. The current audit remains in extension-local storage until the user clears it.
+The extension uses `activeTab` instead of permanent access to every site. It has no persistent content script and can contact only the local FairFlow API. The current audit remains in extension-local storage until the user clears it or the 24-hour retention window expires; storage is capped at 20 snapshots.
 
 ## Threats and mitigations
 
