@@ -51,6 +51,16 @@ npm run dev
 
 Open the local address printed by Vite. On Day 1 it displays the frozen product scope and checks the backend connection.
 
+### Controlled demo store
+
+```powershell
+cd demo-store
+npm install
+npm run dev
+```
+
+Open `http://127.0.0.1:5174` and choose normal and risky variants from the same controlled pair.
+
 ## Privacy principles
 
 - Audits begin only after the user explicitly starts them.
@@ -63,3 +73,4 @@ Open the local address printed by Vite. On Day 1 it displays the frozen product 
 
 - Day 1: repository skeleton, frozen scope, backend health endpoint, and browser interface.
 - Day 2: annotation guidelines, data dictionary, 15 controlled flow pairs, and automated validation.
+- Day 3: interactive four-step checkout lab with eight flows and four controlled pairs.
