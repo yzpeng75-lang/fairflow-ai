@@ -1,0 +1,212 @@
+{
+  "experiment": "Day 11 template-disjoint ablation",
+  "train_flows": 36,
+  "test_flows": 12,
+  "train_templates": 6,
+  "test_templates": 2,
+  "results": {
+    "final_page_text_nb": {
+      "accuracy": 0.4166666666666667,
+      "macro_f1": 0.41666666666666663,
+      "per_class": {
+        "normal": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0
+        },
+        "hidden_fee": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5
+        },
+        "preselected_addon": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5
+        },
+        "trial_to_paid": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        }
+      }
+    },
+    "sequence_text_nb": {
+      "accuracy": 0.4166666666666667,
+      "macro_f1": 0.41666666666666663,
+      "per_class": {
+        "normal": {
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0
+        },
+        "hidden_fee": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5
+        },
+        "preselected_addon": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5
+        },
+        "trial_to_paid": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        }
+      }
+    },
+    "final_page_rules": {
+      "accuracy": 0.6666666666666666,
+      "macro_f1": 0.7083333333333333,
+      "per_class": {
+        "normal": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5
+        },
+        "hidden_fee": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        },
+        "preselected_addon": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "trial_to_paid": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666
+        }
+      }
+    },
+    "full_flow_engine": {
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "per_class": {
+        "normal": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hidden_fee": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "preselected_addon": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "trial_to_paid": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      }
+    }
+  },
+  "predictions": [
+    {
+      "flow_id": "d04_rental_01_hidden_fee_n",
+      "truth": "normal",
+      "final_page_text_nb": "hidden_fee",
+      "sequence_text_nb": "hidden_fee",
+      "final_page_rules": "hidden_fee",
+      "full_flow_engine": "normal"
+    },
+    {
+      "flow_id": "d04_rental_01_hidden_fee_r",
+      "truth": "hidden_fee",
+      "final_page_text_nb": "hidden_fee",
+      "sequence_text_nb": "hidden_fee",
+      "final_page_rules": "hidden_fee",
+      "full_flow_engine": "hidden_fee"
+    },
+    {
+      "flow_id": "d04_rental_01_preselected_addon_n",
+      "truth": "normal",
+      "final_page_text_nb": "preselected_addon",
+      "sequence_text_nb": "preselected_addon",
+      "final_page_rules": "normal",
+      "full_flow_engine": "normal"
+    },
+    {
+      "flow_id": "d04_rental_01_preselected_addon_r",
+      "truth": "preselected_addon",
+      "final_page_text_nb": "preselected_addon",
+      "sequence_text_nb": "preselected_addon",
+      "final_page_rules": "preselected_addon",
+      "full_flow_engine": "preselected_addon"
+    },
+    {
+      "flow_id": "d04_rental_01_trial_to_paid_n",
+      "truth": "normal",
+      "final_page_text_nb": "trial_to_paid",
+      "sequence_text_nb": "trial_to_paid",
+      "final_page_rules": "trial_to_paid",
+      "full_flow_engine": "normal"
+    },
+    {
+      "flow_id": "d04_rental_01_trial_to_paid_r",
+      "truth": "trial_to_paid",
+      "final_page_text_nb": "trial_to_paid",
+      "sequence_text_nb": "trial_to_paid",
+      "final_page_rules": "trial_to_paid",
+      "full_flow_engine": "trial_to_paid"
+    },
+    {
+      "flow_id": "d04_cloud_01_hidden_fee_n",
+      "truth": "normal",
+      "final_page_text_nb": "hidden_fee",
+      "sequence_text_nb": "hidden_fee",
+      "final_page_rules": "hidden_fee",
+      "full_flow_engine": "normal"
+    },
+    {
+      "flow_id": "d04_cloud_01_hidden_fee_r",
+      "truth": "hidden_fee",
+      "final_page_text_nb": "hidden_fee",
+      "sequence_text_nb": "hidden_fee",
+      "final_page_rules": "hidden_fee",
+      "full_flow_engine": "hidden_fee"
+    },
+    {
+      "flow_id": "d04_cloud_01_preselected_addon_n",
+      "truth": "normal",
+      "final_page_text_nb": "hidden_fee",
+      "sequence_text_nb": "hidden_fee",
+      "final_page_rules": "normal",
+      "full_flow_engine": "normal"
+    },
+    {
+      "flow_id": "d04_cloud_01_preselected_addon_r",
+      "truth": "preselected_addon",
+      "final_page_text_nb": "hidden_fee",
+      "sequence_text_nb": "hidden_fee",
+      "final_page_rules": "preselected_addon",
+      "full_flow_engine": "preselected_addon"
+    },
+    {
+      "flow_id": "d04_cloud_01_trial_to_paid_n",
+      "truth": "normal",
+      "final_page_text_nb": "trial_to_paid",
+      "sequence_text_nb": "trial_to_paid",
+      "final_page_rules": "trial_to_paid",
+      "full_flow_engine": "normal"
+    },
+    {
+      "flow_id": "d04_cloud_01_trial_to_paid_r",
+      "truth": "trial_to_paid",
+      "final_page_text_nb": "trial_to_paid",
+      "sequence_text_nb": "trial_to_paid",
+      "final_page_rules": "trial_to_paid",
+      "full_flow_engine": "trial_to_paid"
+    }
+  ],
+  "warning": "All results use synthetic controlled data; only the split methodology generalizes beyond it."
+}
