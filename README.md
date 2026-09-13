@@ -61,5 +61,5 @@ Open the local address printed by Vite. On Day 1 it displays the frozen product 
 
 ## Status
 
-Day 1: repository skeleton, scope, backend health endpoint, and browser interface.
-
+- Day 1: repository skeleton, frozen scope, backend health endpoint, and browser interface.
+- Day 2: annotation guidelines, data dictionary, 15 controlled flow pairs, and automated validation.
