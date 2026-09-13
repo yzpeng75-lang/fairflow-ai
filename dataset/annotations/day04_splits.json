@@ -1,0 +1,20 @@
+{
+  "strategy": "template-disjoint",
+  "seed": 20260913,
+  "train": [
+    "airline_01",
+    "hotel_01",
+    "retail_01",
+    "subscription_01",
+    "rail_01",
+    "food_01"
+  ],
+  "validation": [
+    "course_01",
+    "flowers_01"
+  ],
+  "test": [
+    "rental_01",
+    "cloud_01"
+  ]
+}
