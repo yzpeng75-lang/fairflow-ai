@@ -32,6 +32,7 @@ class UnifiedFinding(BaseModel):
     confidence: float = Field(ge=0, le=1)
     title: str
     evidence: str
+    recommended_action: str
 
 
 class DetectorResults(BaseModel):
@@ -79,6 +80,7 @@ def analyze_checkout(request: UnifiedAnalysisRequest) -> UnifiedAnalysisResult:
                 confidence=price_result.confidence,
                 title="Mandatory fee appeared late",
                 evidence=price_result.evidence.explanation,
+                recommended_action="Review the added fee and compare the final total before continuing.",
             )
         )
     if choice_result and choice_result.flagged:
@@ -92,6 +94,7 @@ def analyze_checkout(request: UnifiedAnalysisRequest) -> UnifiedAnalysisResult:
                 confidence=choice_result.confidence,
                 title="Optional paid add-on was preselected",
                 evidence=evidence.explanation,
+                recommended_action="Decide whether you want this option; deselect it before payment if not.",
             )
         )
     if renewal_result and renewal_result.flagged:
@@ -105,6 +108,7 @@ def analyze_checkout(request: UnifiedAnalysisRequest) -> UnifiedAnalysisResult:
                 confidence=renewal_result.confidence,
                 title="Automatic renewal was disclosed at commitment",
                 evidence=evidence.explanation,
+                recommended_action="Review the renewal price and interval before starting the trial.",
             )
         )
 
@@ -136,4 +140,3 @@ def analyze_checkout(request: UnifiedAnalysisRequest) -> UnifiedAnalysisResult:
         ),
         scoring_note="Category weights are fixed MVP policy values, not learned probabilities.",
     )
-

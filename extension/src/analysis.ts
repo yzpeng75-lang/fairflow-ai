@@ -6,7 +6,7 @@ export interface UnifiedResult {
   confidence: number;
   needs_review: boolean;
   summary: string;
-  findings: Array<{ risk_type: string; title: string; evidence: string; confidence: number }>;
+  findings: Array<{ risk_type: string; title: string; evidence: string; confidence: number; recommended_action: string }>;
 }
 
 export async function analyzeEvidence(items: PageEvidence[]): Promise<UnifiedResult> {

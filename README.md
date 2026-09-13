@@ -80,3 +80,4 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - Day 7: RenewalLens delayed-renewal detector, uncertainty handling, live evidence UI, and controlled evaluation.
 - Day 8: unified analysis engine with auditable risk scoring, combined evidence, and four-class evaluation.
 - Day 9: Chrome extension evidence capture, local audit storage, unified API connection, and privacy guardrails.
+- Day 10: end-to-end evidence-to-report pipeline with stable report IDs and actionable, neutral guidance.

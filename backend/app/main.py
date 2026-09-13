@@ -5,6 +5,7 @@ from app.analysis_engine import UnifiedAnalysisRequest, UnifiedAnalysisResult, a
 from app.detectors.choice_guard import ChoiceGuardRequest, ChoiceGuardResult, analyze_choice_guard
 from app.detectors.price_trace import PriceTraceRequest, PriceTraceResult, analyze_price_trace
 from app.detectors.renewal_lens import RenewalLensRequest, RenewalLensResult, analyze_renewal_lens
+from app.reporting import AuditReport, build_audit_report
 
 
 app = FastAPI(
@@ -71,3 +72,8 @@ def renewal_lens(request: RenewalLensRequest) -> RenewalLensResult:
 @app.post("/api/v1/analyze/checkout", response_model=UnifiedAnalysisResult)
 def checkout_analysis(request: UnifiedAnalysisRequest) -> UnifiedAnalysisResult:
     return analyze_checkout(request)
+
+
+@app.post("/api/v1/reports/from-analysis", response_model=AuditReport)
+def report_from_analysis(result: UnifiedAnalysisResult) -> AuditReport:
+    return build_audit_report(result)
