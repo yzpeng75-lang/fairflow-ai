@@ -60,7 +60,7 @@ export default function App() {
   const isChinese = selected.language === "zh";
   const symbol = selected.templateId.startsWith("airline") ? "✈" : selected.templateId.startsWith("hotel") ? "⌂" : selected.templateId.startsWith("retail") ? "◉" : "♫";
 
-  return <main className={`store ${selected.templateId}`} data-ff-flow-id={selected.id} data-ff-step={step}>
+  return <main className={`store ${selected.templateId}`} data-ff-flow-id={selected.id} data-ff-step={step} data-ff-trial-days={selected.trialDays || undefined}>
     <header className="store-nav"><button className="back-link" onClick={reset}>← Checkout Lab</button><div className="store-brand">{selected.brand}</div><span className="secure">Test checkout</span></header>
     <ol className="steps" aria-label="Checkout progress">{steps.map((name, index) => <li className={index + 1 <= step ? "active" : ""} key={name}><span>{index + 1}</span>{name}</li>)}</ol>
     <section className="checkout-grid">

@@ -21,3 +21,14 @@ def test_scope_is_frozen_to_three_features() -> None:
         "trial_to_paid_subscription",
     ]
 
+
+def test_extension_origin_can_call_local_api() -> None:
+    response = client.options(
+        "/api/v1/analyze/checkout",
+        headers={
+            "Origin": "chrome-extension://abcdefghijklmnop",
+            "Access-Control-Request-Method": "POST",
+        },
+    )
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "chrome-extension://abcdefghijklmnop"

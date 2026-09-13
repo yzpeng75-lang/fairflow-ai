@@ -46,10 +46,10 @@ Open `http://127.0.0.1:8000/health`. The expected response is:
 ```powershell
 cd extension
 npm install
-npm run dev
+npm run build
 ```
 
-Open the local address printed by Vite. On Day 1 it displays the frozen product scope and checks the backend connection.
+Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `extension/dist`. Keep the local backend running, then capture at least two steps of a controlled checkout before selecting **Analyze evidence**. The extension requests temporary active-tab access and has no persistent all-sites content script.
 
 ### Controlled demo store
 
@@ -79,3 +79,4 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - Day 6: ChoiceGuard preselected-add-on detector, interaction provenance, live evidence UI, and controlled evaluation.
 - Day 7: RenewalLens delayed-renewal detector, uncertainty handling, live evidence UI, and controlled evaluation.
 - Day 8: unified analysis engine with auditable risk scoring, combined evidence, and four-class evaluation.
+- Day 9: Chrome extension evidence capture, local audit storage, unified API connection, and privacy guardrails.
