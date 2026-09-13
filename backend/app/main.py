@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.detectors.price_trace import PriceTraceRequest, PriceTraceResult, analyze_price_trace
+
 
 app = FastAPI(
     title="FairFlow API",
@@ -10,9 +12,14 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+    ],
     allow_credentials=False,
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )
 
@@ -41,3 +48,7 @@ def scope() -> dict[str, object]:
         ],
     }
 
+
+@app.post("/api/v1/analyze/price-trace", response_model=PriceTraceResult)
+def price_trace(request: PriceTraceRequest) -> PriceTraceResult:
+    return analyze_price_trace(request)

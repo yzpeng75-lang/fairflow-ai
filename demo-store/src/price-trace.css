@@ -1,0 +1,65 @@
+.price-trace {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #cdd7d1;
+  background: #f5faf7;
+}
+
+.price-trace.alert {
+  border-color: #d8a08d;
+  background: #fff3ee;
+}
+
+.trace-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: .09em;
+}
+
+.trace-heading strong {
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.price-trace.alert .trace-heading strong {
+  color: #a13f25;
+}
+
+.trace-points {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  overflow: auto;
+}
+
+.trace-points div {
+  min-width: 58px;
+  padding: 7px;
+  border: 1px solid #dde3df;
+  background: #fff;
+}
+
+.trace-points span,
+.trace-points strong {
+  display: block;
+}
+
+.trace-points span {
+  color: #839088;
+  font-size: 9px;
+}
+
+.trace-points strong {
+  margin-top: 3px;
+  font-size: 11px;
+}
+
+.price-trace p {
+  margin: 12px 0 0;
+  color: #647168;
+  font-size: 11px;
+  line-height: 1.45;
+}
