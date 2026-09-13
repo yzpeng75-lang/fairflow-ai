@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "check:privacy": "python validate_privacy.py",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -20,4 +21,3 @@
     "@types/react-dom": "latest"
   }
 }
-

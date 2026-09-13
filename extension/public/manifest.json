@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "FairFlow AI",
+  "version": "0.1.0",
+  "description": "Capture minimized checkout evidence and explain risky price or consent changes.",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Audit this checkout with FairFlow"
+  },
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["http://127.0.0.1:8000/*"]
+}
