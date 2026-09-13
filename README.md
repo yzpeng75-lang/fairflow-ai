@@ -74,3 +74,4 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - Day 1: repository skeleton, frozen scope, backend health endpoint, and browser interface.
 - Day 2: annotation guidelines, data dictionary, 15 controlled flow pairs, and automated validation.
 - Day 3: interactive four-step checkout lab with eight flows and four controlled pairs.
+- Day 4: reproducible benchmark release with 60 flows, 240 page states, and template-disjoint splits.

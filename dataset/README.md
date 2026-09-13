@@ -33,4 +33,13 @@ From the repository root:
 python dataset/validate_annotations.py
 ```
 
+Generate and validate the Day 4 page-state release:
+
+```powershell
+python dataset/scripts/generate_day04.py
+python dataset/validate_day04.py
+```
+
+The Day 4 release contains 60 flows and 240 ordered page states with template-disjoint train, validation, and test splits. See `DATASET_CARD.md` for its scope and limitations.
+
 No performance claim may be published unless it can be reproduced from the versioned data and evaluation code.
