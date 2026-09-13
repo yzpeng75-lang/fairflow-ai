@@ -27,3 +27,7 @@ Open `http://127.0.0.1:5174`.
 ## Machine-readable attributes
 
 Important elements expose stable `data-ff-*` attributes. These are ground-truth hooks for development and testing, not features that the final detector may rely upon when analyzing an unfamiliar website.
+
+## Live PriceTrace preview
+
+The order summary displays the totals observed so far. On a hidden-fee flow, the warning appears only when a late mandatory fee explains the price increase; optional add-ons are not treated as hidden fees.
