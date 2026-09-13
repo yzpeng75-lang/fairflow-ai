@@ -20,4 +20,14 @@ python evaluation/evaluate_choice_guard.py
 
 The script writes `reports/day06_choice_guard.json`. ChoiceGuard separates a page default from a later user action so that an add-on intentionally selected by the user is not misclassified.
 
+## RenewalLens (Day 7)
+
+Run the detector against all 20 trial-to-paid controlled flows:
+
+```powershell
+python evaluation/evaluate_renewal_lens.py
+```
+
+The script writes `reports/day07_renewal_lens.json`. RenewalLens treats automatic renewal disclosed at the commitment step as a delayed disclosure. If no renewal text is observable, it requests review instead of claiming that the flow is safe.
+
 Evaluation work begins after the dataset schema is frozen. The final report will compare rules, text-only classification, and full-flow analysis using held-out page templates.
