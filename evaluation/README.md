@@ -10,4 +10,14 @@ python evaluation/evaluate_price_trace.py
 
 The script writes `reports/day05_price_trace.json`. Its metrics apply only to the synthetic controlled benchmark and must not be presented as real-web performance.
 
+## ChoiceGuard (Day 6)
+
+Run the detector against all 20 preselected-add-on controlled flows:
+
+```powershell
+python evaluation/evaluate_choice_guard.py
+```
+
+The script writes `reports/day06_choice_guard.json`. ChoiceGuard separates a page default from a later user action so that an add-on intentionally selected by the user is not misclassified.
+
 Evaluation work begins after the dataset schema is frozen. The final report will compare rules, text-only classification, and full-flow analysis using held-out page templates.
