@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.detectors.choice_guard import ChoiceGuardRequest, ChoiceGuardResult, analyze_choice_guard
 from app.detectors.price_trace import PriceTraceRequest, PriceTraceResult, analyze_price_trace
 
 
@@ -52,3 +53,8 @@ def scope() -> dict[str, object]:
 @app.post("/api/v1/analyze/price-trace", response_model=PriceTraceResult)
 def price_trace(request: PriceTraceRequest) -> PriceTraceResult:
     return analyze_price_trace(request)
+
+
+@app.post("/api/v1/analyze/choice-guard", response_model=ChoiceGuardResult)
+def choice_guard(request: ChoiceGuardRequest) -> ChoiceGuardResult:
+    return analyze_choice_guard(request)

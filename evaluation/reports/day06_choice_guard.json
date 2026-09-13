@@ -1,0 +1,18 @@
+{
+  "detector": "ChoiceGuard-v0.1",
+  "dataset": "FairFlow-Bench Day 4 preselected-add-on controlled pairs",
+  "scope": "synthetic controlled benchmark only",
+  "examples": 20,
+  "confusion_matrix": {
+    "tp": 10,
+    "tn": 10,
+    "fp": 0,
+    "fn": 0
+  },
+  "metrics": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "warning": "These results do not establish performance on unfamiliar real websites."
+}

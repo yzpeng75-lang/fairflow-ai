@@ -31,3 +31,7 @@ Important elements expose stable `data-ff-*` attributes. These are ground-truth 
 ## Live PriceTrace preview
 
 The order summary displays the totals observed so far. On a hidden-fee flow, the warning appears only when a late mandatory fee explains the price increase; optional add-ons are not treated as hidden fees.
+
+## Live ChoiceGuard preview
+
+At the cart step, ChoiceGuard reports whether an optional paid control was selected before any user action. Its evidence remains tied to the initial state, so manually checking a normal option does not create a false alert and manually unchecking a risky default does not erase the evidence.
