@@ -22,6 +22,7 @@ export interface CapturedRenewal {
 }
 
 export interface PageEvidence {
+  schemaVersion: "1.0";
   flowId: string;
   origin: string;
   capturedAt: string;
@@ -111,6 +112,7 @@ export function captureCheckoutEvidence(): PageEvidence {
   }).filter((term) => term.renewalPrice > 0);
 
   return {
+    schemaVersion: "1.0",
     flowId: root.dataset.ffFlowId || `${location.origin}-checkout`,
     origin: location.origin,
     capturedAt: new Date().toISOString(),

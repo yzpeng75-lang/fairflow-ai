@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "check:privacy": "python validate_privacy.py",
+    "check:accessibility": "python validate_accessibility.py",
     "preview": "vite preview"
   },
   "dependencies": {

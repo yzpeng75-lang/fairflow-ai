@@ -61,11 +61,23 @@ export async function analyzeEvidence(items: PageEvidence[]): Promise<UnifiedRes
     })),
   } : null;
 
-  const response = await fetch("http://127.0.0.1:8000/api/v1/analyze/checkout", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ flow_id: flowId, price_trace, choice_guard, renewal_lens }),
-  });
-  if (!response.ok) throw new Error(`Analysis service rejected the evidence (${response.status}).`);
-  return response.json() as Promise<UnifiedResult>;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/v1/analyze/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ flow_id: flowId, price_trace, choice_guard, renewal_lens }),
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`Analysis service rejected the evidence (${response.status}).`);
+    return response.json() as Promise<UnifiedResult>;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      throw new Error("Analysis timed out. Confirm that the local FairFlow service is running.");
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
