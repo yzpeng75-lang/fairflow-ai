@@ -1,0 +1,27 @@
+[
+  {
+    "id": "airline_clear", "pairId": "demo_pair_air", "templateId": "airline_01", "label": "normal", "language": "en", "category": "Travel", "brand": "Northstar Air", "product": "Economy flight · Harbor City to Pine Bay", "description": "One-way ticket with one cabin bag. All mandatory charges are included.", "currency": "USD", "basePrice": 399, "initialTotal": 459, "finalTotal": 459, "feeName": "Carrier service fee", "feeAmount": 60, "feeFirstStep": 1, "addonName": null, "addonPrice": 0, "addonDefaultSelected": false, "trialDays": 0, "renewalPrice": 0, "billingInterval": "none", "renewalFirstStep": 0, "autoRenewal": false, "changedFactor": "fee_disclosure"
+  },
+  {
+    "id": "airline_hidden_fee", "pairId": "demo_pair_air", "templateId": "airline_01", "label": "hidden_fee", "language": "en", "category": "Travel", "brand": "Northstar Air", "product": "Economy flight · Harbor City to Pine Bay", "description": "One-way ticket with one cabin bag.", "currency": "USD", "basePrice": 399, "initialTotal": 399, "finalTotal": 459, "feeName": "Carrier service fee", "feeAmount": 60, "feeFirstStep": 4, "addonName": null, "addonPrice": 0, "addonDefaultSelected": false, "trialDays": 0, "renewalPrice": 0, "billingInterval": "none", "renewalFirstStep": 0, "autoRenewal": false, "changedFactor": "fee_disclosure"
+  },
+  {
+    "id": "hotel_clear", "pairId": "demo_pair_hotel", "templateId": "hotel_01", "label": "normal", "language": "en", "category": "Travel", "brand": "Juniper House", "product": "Garden room · One night", "description": "Flexible reservation. The displayed total includes the mandatory resort fee.", "currency": "USD", "basePrice": 520, "initialTotal": 568, "finalTotal": 568, "feeName": "Resort fee", "feeAmount": 48, "feeFirstStep": 1, "addonName": null, "addonPrice": 0, "addonDefaultSelected": false, "trialDays": 0, "renewalPrice": 0, "billingInterval": "none", "renewalFirstStep": 0, "autoRenewal": false, "changedFactor": "fee_disclosure"
+  },
+  {
+    "id": "hotel_hidden_fee", "pairId": "demo_pair_hotel", "templateId": "hotel_01", "label": "hidden_fee", "language": "en", "category": "Travel", "brand": "Juniper House", "product": "Garden room · One night", "description": "Flexible reservation.", "currency": "USD", "basePrice": 520, "initialTotal": 520, "finalTotal": 568, "feeName": "Resort fee", "feeAmount": 48, "feeFirstStep": 4, "addonName": null, "addonPrice": 0, "addonDefaultSelected": false, "trialDays": 0, "renewalPrice": 0, "billingInterval": "none", "renewalFirstStep": 0, "autoRenewal": false, "changedFactor": "fee_disclosure"
+  },
+  {
+    "id": "headphones_opt_in", "pairId": "demo_pair_addon", "templateId": "retail_01", "label": "normal", "language": "zh", "category": "零售", "brand": "声屿商店", "product": "Arc无线降噪耳机", "description": "包含耳机、充电线和一年基础保修。", "currency": "CNY", "basePrice": 899, "initialTotal": 899, "finalTotal": 899, "feeName": null, "feeAmount": 0, "feeFirstStep": 0, "addonName": "两年延长保障", "addonPrice": 69, "addonDefaultSelected": false, "trialDays": 0, "renewalPrice": 0, "billingInterval": "none", "renewalFirstStep": 0, "autoRenewal": false, "changedFactor": "default_selection"
+  },
+  {
+    "id": "headphones_preselected", "pairId": "demo_pair_addon", "templateId": "retail_01", "label": "preselected_addon", "language": "zh", "category": "零售", "brand": "声屿商店", "product": "Arc无线降噪耳机", "description": "包含耳机、充电线和一年基础保修。", "currency": "CNY", "basePrice": 899, "initialTotal": 899, "finalTotal": 968, "feeName": null, "feeAmount": 0, "feeFirstStep": 0, "addonName": "两年延长保障", "addonPrice": 69, "addonDefaultSelected": true, "trialDays": 0, "renewalPrice": 0, "billingInterval": "none", "renewalFirstStep": 0, "autoRenewal": false, "changedFactor": "default_selection"
+  },
+  {
+    "id": "music_opt_in", "pairId": "demo_pair_trial", "templateId": "subscription_01", "label": "normal", "language": "en", "category": "Subscription", "brand": "Luma Music", "product": "Luma Plus · 7-day trial", "description": "Try lossless audio and offline listening. Renewal requires your affirmative choice.", "currency": "USD", "basePrice": 0, "initialTotal": 0, "finalTotal": 0, "feeName": null, "feeAmount": 0, "feeFirstStep": 0, "addonName": null, "addonPrice": 0, "addonDefaultSelected": false, "trialDays": 7, "renewalPrice": 15.99, "billingInterval": "month", "renewalFirstStep": 1, "autoRenewal": false, "changedFactor": "renewal_consent"
+  },
+  {
+    "id": "music_auto_renew", "pairId": "demo_pair_trial", "templateId": "subscription_01", "label": "trial_to_paid", "language": "en", "category": "Subscription", "brand": "Luma Music", "product": "Luma Plus · 7-day trial", "description": "Try lossless audio and offline listening.", "currency": "USD", "basePrice": 0, "initialTotal": 0, "finalTotal": 0, "feeName": null, "feeAmount": 0, "feeFirstStep": 0, "addonName": null, "addonPrice": 0, "addonDefaultSelected": false, "trialDays": 7, "renewalPrice": 15.99, "billingInterval": "month", "renewalFirstStep": 4, "autoRenewal": true, "changedFactor": "renewal_consent"
+  }
+]
+
