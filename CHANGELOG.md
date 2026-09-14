@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- Improved single-page cart drawer detection and visible capture confirmation.
+- Added an explicit disabled-analysis explanation and refreshed unpacked extension bundle.
+
 ## 0.1.0
 
 - Added a Chrome Manifest V3 extension with explicit active-tab evidence capture.
