@@ -33,6 +33,7 @@ h1 { margin: 12px 0; font: 600 38px/.98 "Space Grotesk", sans-serif; letter-spac
 .timeline strong, .timeline small { display: block; }
 .timeline strong { color: #dcebe3; font-size: 12px; text-transform: capitalize; }
 .timeline small { margin-top: 3px; color: #768c80; font-size: 9px; }
+.timeline .capture-warning { color: #ffbb73; }
 .privacy-card { border-color: #284839; background: #0b2117; }
 .privacy-card strong { color: #8ff5bc; font-size: 12px; }
 .privacy-card p { margin: 7px 0; color: #8fa69a; font-size: 10px; line-height: 1.45; }

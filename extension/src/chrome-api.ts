@@ -1,9 +1,9 @@
 import { captureCheckoutEvidence, type PageEvidence } from "./capture";
 
 interface ChromeApi {
-  tabs: { query(query: { active: boolean; currentWindow: boolean }): Promise<Array<{ id?: number }>> };
+  tabs: { query(query: { active: boolean; currentWindow: boolean }): Promise<Array<{ id?: number; url?: string }>> };
   scripting: {
-    executeScript<T>(details: { target: { tabId: number }; func: () => T }): Promise<Array<{ result?: T }>>;
+    executeScript<T>(details: { target: { tabId: number; allFrames?: boolean }; func: () => T }): Promise<Array<{ frameId?: number; result?: T }>>;
   };
   storage: {
     local: {
@@ -27,12 +27,34 @@ export async function captureActiveTab(): Promise<PageEvidence> {
   if (!chrome) throw new Error("Open the built FairFlow popup as a Chrome extension to capture a page.");
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.id == null) throw new Error("No active browser tab is available.");
-  const [execution] = await chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    func: captureCheckoutEvidence,
-  });
-  if (!execution?.result) throw new Error("The page did not return checkout evidence.");
-  return execution.result;
+  let executions: Array<{ frameId?: number; result?: PageEvidence | null }>;
+  try {
+    executions = await chrome.scripting.executeScript({
+      target: { tabId: tab.id, allFrames: true },
+      func: captureCheckoutEvidence,
+    });
+  } catch {
+    executions = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: captureCheckoutEvidence,
+    });
+  }
+  const candidates = executions
+    .map((execution) => execution.result)
+    .filter((result): result is PageEvidence => Boolean(result))
+    .sort((left, right) => {
+      const sourceRank = { annotated: 4, platform: 3, structured_data: 2, heuristic: 1 };
+      const leftEvidence = left.mandatoryFees.length + left.paidChoices.length + left.renewalTerms.length;
+      const rightEvidence = right.mandatoryFees.length + right.paidChoices.length + right.renewalTerms.length;
+      return (sourceRank[right.extractionSource] - sourceRank[left.extractionSource])
+        || (right.captureConfidence - left.captureConfidence)
+        || (rightEvidence - leftEvidence);
+    });
+  const captured = candidates[0];
+  if (!captured) throw new Error("The page did not return checkout evidence.");
+  if (captured.extractionSource === "annotated" || !tab.url) return captured;
+  const topOrigin = new URL(tab.url).origin;
+  return { ...captured, origin: topOrigin, flowId: `${topOrigin}-checkout` };
 }
 
 const STORAGE_KEY = "fairflow-current-audit";

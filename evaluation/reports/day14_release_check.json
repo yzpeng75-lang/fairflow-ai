@@ -1,114 +1,121 @@
 {
   "release": "FairFlow AI 0.1.0",
-  "validated_revision": "bd7e0dc",
+  "validated_revision": "67472d4",
   "passed": true,
-  "checks_passed": 16,
-  "checks_total": 16,
+  "checks_passed": 17,
+  "checks_total": 17,
   "results": [
     {
       "name": "generate benchmark",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.117,
+      "duration_seconds": 0.134,
       "output_tail": "Generated 60 flows and 240 page states"
     },
     {
       "name": "validate seed annotations",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.153,
+      "duration_seconds": 0.13,
       "output_tail": "FairFlow-Bench seed schema validation passed\nReview status: provisional seed labels; independent human review pending\nRows: 30 | Pairs: 15\nLabels: hidden_fee=5, normal=15, preselected_addon=5, trial_to_paid=5"
     },
     {
       "name": "validate benchmark",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.145,
+      "duration_seconds": 0.152,
       "output_tail": "FairFlow-Bench release validation passed\nFlows: 60 | States: 240 | Pairs: 30\nTemplates: train=6, validation=2, test=2\nLabels: hidden_fee=10, normal=30, preselected_addon=10, trial_to_paid=10"
     },
     {
       "name": "validate demo flows",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.114,
+      "duration_seconds": 0.11,
       "output_tail": "Demo flow validation passed\nFlows: 8 | Controlled pairs: 4\nLabels: hidden_fee=2, normal=4, preselected_addon=1, trial_to_paid=1"
     },
     {
       "name": "backend tests",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 2.439,
-      "output_tail": "                     [100%]\n============================== warnings summary ===============================\nbackend\\.venv\\Lib\\site-packages\\starlette\\testclient.py:45\n  C:\\Users\\Administrator\\Documents\\Codex\\2026-09-12\\pi\\fairflow-ai\\backend\\.venv\\Lib\\site-packages\\starlette\\testclient.py:45: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n25 passed, 1 warning in 1.03s"
+      "duration_seconds": 1.667,
+      "output_tail": "                     [100%]\n============================== warnings summary ===============================\nbackend\\.venv\\Lib\\site-packages\\starlette\\testclient.py:45\n  C:\\Users\\Administrator\\Documents\\Codex\\2026-09-12\\pi\\fairflow-ai\\backend\\.venv\\Lib\\site-packages\\starlette\\testclient.py:45: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n25 passed, 1 warning in 0.82s"
     },
     {
       "name": "PriceTrace evaluation",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.414,
+      "duration_seconds": 0.379,
       "output_tail": "{\n  \"detector\": \"PriceTrace-v0.1\",\n  \"dataset\": \"FairFlow-Bench hidden-fee controlled pairs\",\n  \"scope\": \"synthetic controlled benchmark only\",\n  \"examples\": 20,\n  \"confusion_matrix\": {\n    \"tp\": 10,\n    \"tn\": 10,\n    \"fp\": 0,\n    \"fn\": 0\n  },\n  \"metrics\": {\n    \"precision\": 1.0,\n    \"recall\": 1.0,\n    \"f1\": 1.0\n  },\n  \"warning\": \"These results do not establish performance on unfamiliar real websites.\"\n}"
     },
     {
       "name": "ChoiceGuard evaluation",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.391,
+      "duration_seconds": 0.384,
       "output_tail": "{\n  \"detector\": \"ChoiceGuard-v0.1\",\n  \"dataset\": \"FairFlow-Bench preselected-add-on controlled pairs\",\n  \"scope\": \"synthetic controlled benchmark only\",\n  \"examples\": 20,\n  \"confusion_matrix\": {\n    \"tp\": 10,\n    \"tn\": 10,\n    \"fp\": 0,\n    \"fn\": 0\n  },\n  \"metrics\": {\n    \"precision\": 1.0,\n    \"recall\": 1.0,\n    \"f1\": 1.0\n  },\n  \"warning\": \"These results do not establish performance on unfamiliar real websites.\"\n}"
     },
     {
       "name": "RenewalLens evaluation",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.397,
+      "duration_seconds": 0.378,
       "output_tail": "{\n  \"detector\": \"RenewalLens-v0.1\",\n  \"dataset\": \"FairFlow-Bench trial-to-paid controlled pairs\",\n  \"scope\": \"synthetic controlled benchmark only\",\n  \"examples\": 20,\n  \"confusion_matrix\": {\n    \"tp\": 10,\n    \"tn\": 10,\n    \"fp\": 0,\n    \"fn\": 0\n  },\n  \"metrics\": {\n    \"precision\": 1.0,\n    \"recall\": 1.0,\n    \"f1\": 1.0\n  },\n  \"warning\": \"These results do not establish performance on unfamiliar real websites.\"\n}"
     },
     {
       "name": "unified engine evaluation",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.425,
+      "duration_seconds": 0.421,
       "output_tail": "\n      \"trial_to_paid\": 0\n    },\n    \"hidden_fee\": {\n      \"normal\": 0,\n      \"hidden_fee\": 10,\n      \"preselected_addon\": 0,\n      \"trial_to_paid\": 0\n    },\n    \"preselected_addon\": {\n      \"normal\": 0,\n      \"hidden_fee\": 0,\n      \"preselected_addon\": 10,\n      \"trial_to_paid\": 0\n    },\n    \"trial_to_paid\": {\n      \"normal\": 0,\n      \"hidden_fee\": 0,\n      \"preselected_addon\": 0,\n      \"trial_to_paid\": 10\n    }\n  },\n  \"risk_score_distribution\": {\n    \"0\": 30,\n    \"30\": 10,\n    \"40\": 10,\n    \"45\": 10\n  },\n  \"warning\": \"These results do not establish performance on unfamiliar real websites.\"\n}"
     },
     {
       "name": "ablation evaluation",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.141,
+      "duration_seconds": 0.142,
       "output_tail": "{\n  \"final_page_text_nb\": 0.41666666666666663,\n  \"sequence_text_nb\": 0.41666666666666663,\n  \"final_page_rules\": 0.7083333333333333,\n  \"full_flow_engine\": 1.0\n}"
     },
     {
       "name": "privacy contract",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.107,
+      "duration_seconds": 0.113,
       "output_tail": "FairFlow extension privacy validation passed\nNo broad host access, persistent content script, URL path, or form values collected"
     },
     {
       "name": "accessibility contract",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.1,
+      "duration_seconds": 0.107,
       "output_tail": "FairFlow extension accessibility contract passed"
+    },
+    {
+      "name": "real-page capture adapter",
+      "passed": true,
+      "exit_code": 0,
+      "duration_seconds": 2.445,
+      "output_tail": "8.8432ms)\n\u2714 rejects pages without an unambiguous visible price (5.1444ms)\n\u2714 reads Schema.org Offer metadata when visual markup is nonstandard (7.1302ms)\n\u2714 recognizes a platform total with symbol-after European formatting (8.3326ms)\n\u2714 searches visible content inside open shadow roots (8.3578ms)\n\u2139 tests 6\n\u2139 suites 0\n\u2139 pass 6\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1009.115\nnpm notice\nnpm notice New major version of npm available! 11.12.1 -> 12.0.2\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2\nnpm notice To update run: npm install -g npm@12.0.2\nnpm notice"
     },
     {
       "name": "demo store build",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 12.489,
-      "output_tail": "irflow-demo-store@0.1.0 build\n> tsc -b && vite build\n\nvite v8.3.0 building client environment for production...\ntransforming...\n\u2713 21 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.45 kB \u2502 gzip:  0.29 kB\ndist/assets/index-n3Hhv38t.css    7.59 kB \u2502 gzip:  2.30 kB\ndist/assets/index-a_Qb7aMC.js   233.80 kB \u2502 gzip: 72.99 kB\n\n\u2713 built in 1.59s\nnpm notice\nnpm notice New major version of npm available! 11.12.1 -> 12.0.2\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2\nnpm notice To update run: npm install -g npm@12.0.2\nnpm notice"
+      "duration_seconds": 2.067,
+      "output_tail": "> fairflow-demo-store@0.1.0 build\n> tsc -b && vite build\n\nvite v8.3.0 building client environment for production...\ntransforming...\n\u2713 21 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.45 kB \u2502 gzip:  0.29 kB\ndist/assets/index-n3Hhv38t.css    7.59 kB \u2502 gzip:  2.30 kB\ndist/assets/index-a_Qb7aMC.js   233.80 kB \u2502 gzip: 72.99 kB\n\n\u2713 built in 273ms"
     },
     {
       "name": "extension build",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 4.729,
-      "output_tail": "airflow-extension@0.1.0 build\n> tsc -b && vite build\n\nvite v8.3.0 building client environment for production...\ntransforming...\n\u2713 19 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.44 kB \u2502 gzip:  0.28 kB\ndist/assets/index-DMDu0hNF.css    4.03 kB \u2502 gzip:  1.51 kB\ndist/assets/index-CXBXHhyO.js   229.71 kB \u2502 gzip: 72.43 kB\n\n\u2713 built in 1.34s\nnpm notice\nnpm notice New major version of npm available! 11.12.1 -> 12.0.2\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2\nnpm notice To update run: npm install -g npm@12.0.2\nnpm notice"
+      "duration_seconds": 2.038,
+      "output_tail": "> fairflow-extension@0.1.0 build\n> tsc -b && vite build\n\nvite v8.3.0 building client environment for production...\ntransforming...\n\u2713 19 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.44 kB \u2502 gzip:  0.28 kB\ndist/assets/index-BhEUHf2E.css    4.07 kB \u2502 gzip:  1.53 kB\ndist/assets/index-B37GpAbE.js   238.78 kB \u2502 gzip: 76.12 kB\n\n\u2713 built in 269ms"
     },
     {
       "name": "whitespace check",
       "passed": true,
       "exit_code": 0,
-      "duration_seconds": 0.113,
-      "output_tail": "es it\nwarning: in the working copy of 'evaluation/evaluate_unified_engine.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'extension/README.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'extension/src/App.tsx', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'extension/src/styles.css', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'submission/ASSET_CHECKLIST.md', LF will be replaced by CRLF the next time Git touches it"
+      "duration_seconds": 0.086,
+      "output_tail": "ches it\nwarning: in the working copy of 'extension/src/App.tsx', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'extension/src/capture.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'extension/src/chrome-api.ts', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'extension/src/styles.css', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'extension/tests/capture.test.mjs', LF will be replaced by CRLF the next time Git touches it"
     },
     {
       "name": "required release files",
