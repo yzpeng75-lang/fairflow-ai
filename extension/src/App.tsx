@@ -67,7 +67,7 @@ export default function App() {
   const excludedCount = evidence.reduce((sum, item) => sum + item.excludedSensitiveFieldCount, 0);
 
   return <main className="shell" aria-busy={busy}>
-    <header><div className="brand"><span aria-hidden="true">F</span><div>FairFlow AI<small>Evidence capture · Release candidate</small></div></div><div className={`status ${apiState}`} role="status" aria-live="polite">Service {apiState}</div></header>
+    <header><div className="brand"><span aria-hidden="true">F</span><div>FairFlow AI<small>Private evidence capture</small></div></div><div className={`status ${apiState}`} role="status" aria-live="polite" aria-label={`Service ${apiState}`}>{apiState}</div></header>
 
     <section className="intro"><p className="eyebrow">PRIVACY-FIRST CHECKOUT AUDIT</p><h1>Capture the change,<br />not the customer.</h1><p>At each checkout step, capture only visible totals, fees, paid choices, and renewal terms.</p></section>
 

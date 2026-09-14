@@ -1,6 +1,6 @@
 {
   "detector": "PriceTrace-v0.1",
-  "dataset": "FairFlow-Bench Day 4 hidden-fee controlled pairs",
+  "dataset": "FairFlow-Bench hidden-fee controlled pairs",
   "scope": "synthetic controlled benchmark only",
   "examples": 20,
   "confusion_matrix": {

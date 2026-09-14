@@ -2,7 +2,7 @@
 
 ## Version
 
-Day 4 synthetic release, generated with seed `20260913`.
+Synthetic controlled release generated with a fixed reproducibility seed.
 
 ## Purpose
 
@@ -53,4 +53,3 @@ This release is suitable for pipeline development and controlled evaluation. It 
 python dataset/scripts/generate_day04.py
 python dataset/validate_day04.py
 ```
-

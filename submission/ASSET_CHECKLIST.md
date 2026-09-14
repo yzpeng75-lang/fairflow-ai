@@ -10,7 +10,7 @@
 - [ ] RenewalLens “terms not visible yet” state.
 - [ ] RenewalLens late disclosure warning.
 - [ ] Extension popup with two captured steps and final score.
-- [ ] Day 11 ablation table.
+- [ ] Template-disjoint ablation table.
 - [ ] Two-minute demo video following `DEMO_SCRIPT.md`.
 
 ## Final human-only checks
@@ -20,4 +20,3 @@
 - [ ] Confirm video audio and captions are understandable.
 - [ ] Confirm team/member details in Devpost are accurate.
 - [ ] Submit before the official deadline shown on Devpost.
-

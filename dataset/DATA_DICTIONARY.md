@@ -1,6 +1,6 @@
 # FairFlow-Bench Data Dictionary
 
-Each row represents one complete checkout flow. Day 3 will add ordered page-state records linked by `flow_id`.
+Each row represents one complete checkout flow. Ordered page-state records are linked by `flow_id`.
 
 | Field | Type | Allowed values / meaning |
 |---|---|---|
@@ -24,9 +24,9 @@ Each row represents one complete checkout flow. Day 3 will add ordered page-stat
 | `first_disclosure_step` | integer | First step where the material term is visible; `0` if not applicable |
 | `evidence_text` | string | Exact interface text supporting the annotation |
 | `changed_factor` | category | The single controlled difference from the paired variant |
-| `annotator_1` | category | Provisional Day 2 seed label; later replaced by first human review |
-| `annotator_2` | category | Day 2 pipeline fixture; must be replaced by a second independent human review |
-| `adjudicated_label` | category | Day 2 pipeline fixture; becomes final only after genuine disagreement resolution |
+| `annotator_1` | category | Provisional seed label; later replaced by first human review |
+| `annotator_2` | category | Pipeline fixture; must be replaced by a second independent human review |
+| `adjudicated_label` | category | Pipeline fixture; becomes final only after genuine disagreement resolution |
 | `notes` | string | Concise explanation of why the example is normal or risky |
 
 ## Derived values
@@ -41,4 +41,4 @@ Derived values are calculated during evaluation and are not manually entered int
 
 ## Review status
 
-The Day 2 annotator columns intentionally duplicate the seed label so the validation pipeline can be tested. They do **not** establish inter-annotator agreement. The dataset remains provisional until two people review the flows independently and their identities or anonymized reviewer IDs are recorded in a separate review manifest.
+The annotator columns intentionally duplicate the seed label so the validation pipeline can be tested. They do **not** establish inter-annotator agreement. The dataset remains provisional until two people review the flows independently and their identities or anonymized reviewer IDs are recorded in a separate review manifest.

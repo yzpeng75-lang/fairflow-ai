@@ -16,7 +16,7 @@ FairFlow does not make legal accusations, automate purchases, collect payment cr
 
 ## Why sequence matters
 
-The Day 11 held-out-template experiment compares four approaches on 12 test flows:
+The held-out-template experiment compares four approaches on 12 test flows:
 
 | Method | Accuracy | Macro-F1 |
 |---|---:|---:|
@@ -33,7 +33,7 @@ These are synthetic controlled-benchmark results. The perfect full-flow value ve
 fairflow-ai/
 ├── backend/       FastAPI analysis service
 ├── extension/     React + TypeScript browser interface
-├── demo-store/    Controlled checkout flows (Day 3)
+├── demo-store/    Controlled checkout flows
 ├── dataset/       FairFlow-Bench data and labels
 ├── evaluation/    Baselines, metrics, and reports
 └── docs/          Scope, architecture, and decisions
@@ -82,22 +82,17 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - Every warning includes evidence and confidence.
 - Uncertain findings are labeled for human review.
 
-## Status
+## Capabilities
 
-- Day 1: repository skeleton, frozen scope, backend health endpoint, and browser interface.
-- Day 2: annotation guidelines, data dictionary, 15 controlled flow pairs, and automated validation.
-- Day 3: interactive four-step checkout lab with eight flows and four controlled pairs.
-- Day 4: reproducible benchmark release with 60 flows, 240 page states, and template-disjoint splits.
-- Day 5: PriceTrace hidden-fee detector, evidence API, live trace UI, and controlled benchmark evaluation.
-- Day 6: ChoiceGuard preselected-add-on detector, interaction provenance, live evidence UI, and controlled evaluation.
-- Day 7: RenewalLens delayed-renewal detector, uncertainty handling, live evidence UI, and controlled evaluation.
-- Day 8: unified analysis engine with auditable risk scoring, combined evidence, and four-class evaluation.
-- Day 9: Chrome extension evidence capture, local audit storage, unified API connection, and privacy guardrails.
-- Day 10: end-to-end evidence-to-report pipeline with stable report IDs and actionable, neutral guidance.
-- Day 11: trainable text baseline and template-disjoint ablation comparing final-page, sequence, and full-flow methods.
-- Day 12: privacy, retention, timeout, security-header, accessibility, and failure-recovery hardening.
-- Day 13: Devpost story, two-minute demo script, judging map, architecture, cover art, and reproducibility guide.
-- Day 14: one-command release verification, GitHub CI, changelog, final checklist, and submission package.
+- Frozen three-risk scope with documented annotation guidelines and controlled pairs.
+- Interactive four-step checkout lab with normal and risky counterfactual flows.
+- Reproducible benchmark with 60 flows, 240 page states, and template-disjoint splits.
+- PriceTrace, ChoiceGuard, and RenewalLens detectors with evidence and confidence.
+- Unified analysis engine with transparent risk scoring and actionable reports.
+- Privacy-first Chrome capture with local retention and explicit user activation.
+- Trainable text baseline and template-disjoint ablation evaluation.
+- Automated privacy, accessibility, data, API, evaluation, and build checks.
+- Submission story, demo script, architecture, cover art, and reproducibility guide.
 
 ## Release verification
 

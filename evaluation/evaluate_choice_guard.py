@@ -67,7 +67,7 @@ def main() -> None:
     f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0
     report = {
         "detector": "ChoiceGuard-v0.1",
-        "dataset": "FairFlow-Bench Day 4 preselected-add-on controlled pairs",
+        "dataset": "FairFlow-Bench preselected-add-on controlled pairs",
         "scope": "synthetic controlled benchmark only",
         "examples": len(predictions),
         "confusion_matrix": {"tp": tp, "tn": tn, "fp": fp, "fn": fn},
@@ -82,4 +82,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

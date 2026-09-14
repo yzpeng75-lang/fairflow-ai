@@ -1,6 +1,6 @@
 {
   "detector": "RenewalLens-v0.1",
-  "dataset": "FairFlow-Bench Day 4 trial-to-paid controlled pairs",
+  "dataset": "FairFlow-Bench trial-to-paid controlled pairs",
   "scope": "synthetic controlled benchmark only",
   "examples": 20,
   "confusion_matrix": {

@@ -124,7 +124,7 @@ def main() -> None:
     accuracy = sum(truth == prediction for truth, prediction in zip(truths, predictions)) / len(truths)
     report = {
         "engine": "FairFlow-Engine-v0.1",
-        "dataset": "FairFlow-Bench Day 4 full controlled release",
+        "dataset": "FairFlow-Bench full controlled release",
         "scope": "synthetic controlled benchmark only",
         "examples": len(truths),
         "accuracy": accuracy,
@@ -142,4 +142,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

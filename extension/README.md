@@ -1,6 +1,6 @@
 # FairFlow Chrome extension
 
-The Day 9 extension captures a minimized checkout trail and sends it to the local FairFlow API only when the user presses **Analyze evidence**.
+The extension captures a minimized checkout trail and sends it to the local FairFlow API only when the user presses **Analyze evidence**.
 
 ## Build and load
 
@@ -33,7 +33,6 @@ Capturing the same step again replaces the earlier snapshot. Switching to anothe
 
 There is no `<all_urls>` permission and no always-running content script.
 
-## Day 9 supported page contract
+## Supported page contract
 
 The controlled demo exposes `data-ff-*` roles for visible totals, mandatory fees, optional paid controls, renewal disclosures, flow ID, and step. General website adapters are later work; the extension does not claim universal site support.
-

@@ -1,5 +1,5 @@
 {
-  "experiment": "Day 11 template-disjoint ablation",
+  "experiment": "Template-disjoint ablation",
   "train_flows": 36,
   "test_flows": 12,
   "train_templates": 6,

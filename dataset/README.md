@@ -2,7 +2,7 @@
 
 FairFlow-Bench evaluates whether a system can identify evidence-backed risks across an online purchase flow rather than memorizing isolated keywords or page templates.
 
-## Day 2 release
+## Seed annotation release
 
 `annotations/day02_flow_pairs.csv` contains 30 flow-level records:
 
@@ -16,13 +16,13 @@ FairFlow-Bench evaluates whether a system can identify evidence-backed risks acr
 
 The paired design changes one decision-relevant property while keeping the scenario and template constant. Full page-state sequences and held-out templates will be added on Days 3 and 4.
 
-The Day 2 labels are seed annotations for schema and pipeline testing. The duplicated annotator fields are fixtures, not evidence of independent human agreement. They must be replaced by two genuine independent reviews before the benchmark is described as gold-labelled or an agreement score is reported.
+The labels are seed annotations for schema and pipeline testing. The duplicated annotator fields are fixtures, not evidence of independent human agreement. They must be replaced by two genuine independent reviews before the benchmark is described as gold-labelled or an agreement score is reported.
 
 ## Files
 
 - `DATA_DICTIONARY.md`: definitions and allowed values for every column.
 - `ANNOTATION_GUIDELINES.md`: decision rules and examples for human annotators.
-- `annotations/day02_flow_pairs.csv`: the first reviewed flow-level annotations.
+- `annotations/day02_flow_pairs.csv`: provisional flow-level annotations.
 - `validate_annotations.py`: dependency-free integrity checks.
 
 ## Validate
@@ -33,13 +33,13 @@ From the repository root:
 python dataset/validate_annotations.py
 ```
 
-Generate and validate the Day 4 page-state release:
+Generate and validate the page-state release:
 
 ```powershell
 python dataset/scripts/generate_day04.py
 python dataset/validate_day04.py
 ```
 
-The Day 4 release contains 60 flows and 240 ordered page states with template-disjoint train, validation, and test splits. See `DATASET_CARD.md` for its scope and limitations.
+The release contains 60 flows and 240 ordered page states with template-disjoint train, validation, and test splits. See `DATASET_CARD.md` for its scope and limitations.
 
 No performance claim may be published unless it can be reproduced from the versioned data and evaluation code.
