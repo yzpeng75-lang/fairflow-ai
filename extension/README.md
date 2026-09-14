@@ -33,6 +33,11 @@ Capturing the same step again replaces the earlier snapshot. Switching to anothe
 
 There is no `<all_urls>` permission and no always-running content script.
 
-## Supported page contract
+## Supported pages
 
-The controlled demo exposes `data-ff-*` roles for visible totals, mandatory fees, optional paid controls, renewal disclosures, flow ID, and step. General website adapters are later work; the extension does not claim universal site support.
+FairFlow uses two extraction paths:
+
+- Explicit `data-ff-*` roles provide deterministic evidence in the controlled research environment.
+- A privacy-preserving generic adapter recognizes visible totals, common mandatory-fee labels, priced checkbox/radio options, trials, and recurring billing language on real product, cart, pricing, and checkout pages.
+
+Because commerce markup varies, generic captures are evidence candidates rather than claims of universal compatibility. Always review the captured total and evidence counts before analysis. FairFlow never reads form values, page URL paths, names, email addresses, addresses, passwords, or card fields.

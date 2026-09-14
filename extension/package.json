@@ -6,19 +6,21 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "test:capture": "tsc -p tsconfig.capture-test.json && node --test tests/capture.test.mjs",
     "check:privacy": "python validate_privacy.py",
     "check:accessibility": "python validate_accessibility.py",
     "preview": "vite preview"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "typescript": "latest",
+    "vite": "latest"
   },
   "devDependencies": {
     "@types/react": "latest",
-    "@types/react-dom": "latest"
+    "@types/react-dom": "latest",
+    "happy-dom": "^20.14.5"
   }
 }

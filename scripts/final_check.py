@@ -25,6 +25,7 @@ CHECKS = [
     ("ablation evaluation", [PYTHON, "evaluation/evaluate_ablation.py"]),
     ("privacy contract", [PYTHON, "extension/validate_privacy.py"]),
     ("accessibility contract", [PYTHON, "extension/validate_accessibility.py"]),
+    ("real-page capture adapter", [NPM, "--prefix", "extension", "run", "test:capture"]),
     ("demo store build", [NPM, "--prefix", "demo-store", "run", "build"]),
     ("extension build", [NPM, "--prefix", "extension", "run", "build"]),
     ("whitespace check", ["git", "diff", "--check"]),

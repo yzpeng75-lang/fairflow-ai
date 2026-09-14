@@ -35,4 +35,4 @@ The extension uses `activeTab` instead of permanent access to every site. It has
 | Accidental cross-flow mixing | Flow IDs must match and repeated steps replace earlier snapshots. |
 | Background surveillance | Capture begins only through the popup on the active tab. |
 | Remote evidence transmission | Host permission is restricted to the loopback API. |
-| Unsupported-site overclaim | The current release explicitly supports the controlled `data-ff-*` adapter only. |
+| Unsupported-site overclaim | Generic extraction accepts only visible, high-signal evidence and reports ambiguous pages as unsupported; controlled benchmark scores are never presented as universal real-site accuracy. |

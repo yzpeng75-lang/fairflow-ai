@@ -6,5 +6,4 @@ The project combines a privacy-first Chrome extension with a local FastAPI analy
 
 We built FairFlow-Bench with 60 synthetic flows, 30 controlled normal/risk pairs, 240 ordered page states, and template-disjoint splits. A trainable Naive Bayes baseline and a four-method ablation show the central lesson: final-page text cannot reliably explain when a fee or renewal term appeared, while structured full-flow analysis preserves that causal timing. All data generation, predictions, tests, privacy checks, and limitations are reproducible from the public repository.
 
-Our biggest challenge was handling uncertainty honestly. Missing renewal text is marked for review rather than treated as safe, and controlled pairs differ in only one target factor. Next, we would add consented real-site adapters, independent annotation, and user-study calibration without claiming that the current synthetic score represents universal web performance.
-
+Our biggest challenge was handling uncertainty honestly. Missing renewal text is marked for review rather than treated as safe, controlled pairs differ in only one target factor, and the real-page adapter rejects ambiguous evidence instead of guessing. Next, we would add site-specific adapters, independent annotation, and user-study calibration without claiming that the current synthetic score represents universal web performance.

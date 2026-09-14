@@ -12,7 +12,7 @@ The 14-day MVP is intentionally limited to three auditable risks:
 2. Optional paid services selected by default.
 3. Free trials that convert into recurring subscriptions.
 
-FairFlow does not make legal accusations, automate purchases, collect payment credentials, or attempt to support every website during the competition.
+FairFlow does not make legal accusations, automate purchases, collect payment credentials, or claim universal compatibility across every commerce website.
 
 ## Why sequence matters
 
@@ -62,7 +62,7 @@ npm install
 npm run build
 ```
 
-Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `extension/dist`. Keep the local backend running, then capture at least two steps of a controlled checkout before selecting **Analyze evidence**. The extension requests temporary active-tab access and has no persistent all-sites content script.
+Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `extension/dist`. Keep the local backend running, then capture at least two steps on the same real or controlled checkout before selecting **Analyze evidence**. The extension requests temporary active-tab access, has no persistent all-sites content script, and asks for review when page evidence is ambiguous.
 
 ### Controlled demo store
 
@@ -90,6 +90,7 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - PriceTrace, ChoiceGuard, and RenewalLens detectors with evidence and confidence.
 - Unified analysis engine with transparent risk scoring and actionable reports.
 - Privacy-first Chrome capture with local retention and explicit user activation.
+- Generic real-page extraction for visible totals, fees, paid controls, trials, and recurring billing language.
 - Trainable text baseline and template-disjoint ablation evaluation.
 - Automated privacy, accessibility, data, API, evaluation, and build checks.
 - Submission story, demo script, architecture, cover art, and reproducibility guide.
