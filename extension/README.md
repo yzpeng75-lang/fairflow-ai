@@ -38,6 +38,6 @@ There is no `<all_urls>` permission and no always-running content script.
 FairFlow uses two extraction paths:
 
 - Explicit `data-ff-*` roles provide deterministic evidence in the controlled research environment.
-- A privacy-preserving generic adapter recognizes visible totals, common mandatory-fee labels, priced checkbox/radio options, trials, and recurring billing language on real product, cart, pricing, and checkout pages.
+- A privacy-preserving adapter stack reads Schema.org/JSON-LD and commerce metadata, recognizes common Shopify, WooCommerce, and hosted-checkout structures, searches open Shadow DOM and accessible payment frames, and falls back to scored visible text across multiple currencies and languages.
 
-Because commerce markup varies, generic captures are evidence candidates rather than claims of universal compatibility. Always review the captured total and evidence counts before analysis. FairFlow never reads form values, page URL paths, names, email addresses, addresses, passwords, or card fields.
+Because commerce markup varies, generic captures are evidence candidates rather than claims of universal compatibility. The popup shows the extraction source, capture confidence, and warnings so the user can review ambiguous evidence before analysis. FairFlow never reads form values, page URL paths, names, email addresses, addresses, passwords, or card fields.

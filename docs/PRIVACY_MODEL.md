@@ -2,7 +2,7 @@
 
 ## Data flow
 
-FairFlow runs only after an explicit user action. The injected extractor reads allow-listed checkout evidence, stores the current audit locally, and sends it only to the loopback analysis API at `127.0.0.1`.
+FairFlow runs only after an explicit user action. The injected extractor reads minimized public commerce metadata and visible checkout evidence, stores the current audit locally, and sends it only to the loopback analysis API at `127.0.0.1`.
 
 ## Collected
 
@@ -31,7 +31,7 @@ The extension uses `activeTab` instead of permanent access to every site. It has
 
 | Threat | Mitigation |
 |---|---|
-| Sensitive form leakage | Allow-listed selectors; no reads of input values; automated source guard. |
+| Sensitive form leakage | Sensitive-field exclusion, no reads of input values, evidence length limits, and an automated source guard. |
 | Accidental cross-flow mixing | Flow IDs must match and repeated steps replace earlier snapshots. |
 | Background surveillance | Capture begins only through the popup on the active tab. |
 | Remote evidence transmission | Host permission is restricted to the loopback API. |

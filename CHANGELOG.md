@@ -4,6 +4,7 @@
 
 - Added a Chrome Manifest V3 extension with explicit active-tab evidence capture.
 - Added a privacy-preserving generic adapter for real product, cart, pricing, and checkout pages.
+- Added structured-data, commerce-platform, open Shadow DOM, accessible iframe, international currency, and multilingual evidence strategies.
 - Added PriceTrace, ChoiceGuard, RenewalLens, and a unified risk engine.
 - Added deterministic user-facing audit reports and recommended actions.
 - Released FairFlow-Bench with 60 flows, 30 controlled pairs, and 240 page states.
