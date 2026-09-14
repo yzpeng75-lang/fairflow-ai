@@ -119,3 +119,20 @@ test("searches visible content inside open shadow roots", async () => {
   assert.equal(result.visibleTotal, 72);
   assert.equal(result.extractionSource, "platform");
 });
+
+test("treats a visible single-page cart drawer as a new cart step", async () => {
+  const result = await loadCapture(`
+    <html><head><title>Dish Soap – Public Goods</title></head><body><main>
+      <h1>Dish Soap</h1><strong class="price__regular">$9.95</strong>
+      <aside class="cart-drawer" role="dialog">
+        <h2>Your cart</h2>
+        <strong class="totals__total-value">Order total $9.95</strong>
+        <button>Continue to Checkout</button>
+      </aside>
+    </main></body></html>
+  `, "https://shop.example/products/dish-soap");
+
+  assert.equal(result.pageType, "cart");
+  assert.equal(result.step, 2);
+  assert.equal(result.visibleTotal, 9.95);
+});

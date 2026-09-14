@@ -19,6 +19,7 @@ h1 { margin: 12px 0; font: 600 38px/.98 "Space Grotesk", sans-serif; letter-spac
 .intro > p:last-child { max-width: 500px; margin: 0; color: #9aafa4; font-size: 13px; line-height: 1.5; }
 .notice, .error { margin-bottom: 14px; padding: 12px; border: 1px solid #384a41; color: #a8bbb0; background: #101d17; font-size: 11px; line-height: 1.5; }
 .error { border-color: #8b4a35; color: #ffc4ae; background: #2a1711; }
+.capture-success { margin-bottom: 14px; padding: 12px; border: 1px solid #347654; color: #9cf4c6; background: #10281c; font-size: 11px; line-height: 1.5; }
 .controls { justify-content: flex-start; gap: 8px; flex-wrap: wrap; }
 .controls button { padding: 10px 12px; border: 1px solid #3b5045; color: #d5e4dc; background: transparent; cursor: pointer; font-size: 11px; }
 .controls .primary { border-color: #67f0ad; color: #07110c; background: #67f0ad; font-weight: 600; }

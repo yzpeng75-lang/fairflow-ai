@@ -13,6 +13,7 @@ export default function App() {
   const [result, setResult] = useState<UnifiedResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [captureNotice, setCaptureNotice] = useState("");
   const extensionMode = isExtensionRuntime();
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function App() {
   async function capture() {
     setBusy(true);
     setError("");
+    setCaptureNotice("");
     try {
       const snapshot = await captureActiveTab();
       if (evidence.length && evidence[0].flowId !== snapshot.flowId) {
@@ -38,6 +40,7 @@ export default function App() {
       await saveEvidence(updated);
       setEvidence(updated);
       setResult(null);
+      setCaptureNotice(`Captured ${snapshot.pageType} as step ${snapshot.step}. The audit now has ${updated.length} step${updated.length === 1 ? "" : "s"}.`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Capture failed.");
     } finally {
@@ -62,6 +65,7 @@ export default function App() {
     setEvidence([]);
     setResult(null);
     setError("");
+    setCaptureNotice("");
   }
 
   const excludedCount = evidence.reduce((sum, item) => sum + item.excludedSensitiveFieldCount, 0);
@@ -78,6 +82,7 @@ export default function App() {
 
     {!extensionMode && <div className="notice">This preview shows the popup interface. Load the built <code>extension/dist</code> folder in Chrome to capture the active tab.</div>}
     {error && <div className="error" role="alert">{error}</div>}
+    {captureNotice && <div className="capture-success" role="status">{captureNotice}</div>}
 
     <section className="controls">
       <button className="primary" onClick={capture} disabled={busy || !extensionMode}>{busy ? "Working…" : "Capture current step"}</button>

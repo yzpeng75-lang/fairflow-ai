@@ -219,10 +219,31 @@ export function captureCheckoutEvidence(): PageEvidence | null {
   }
 
   function inferPageType(): { pageType: string; step: number } {
-    const hint = cleanText(`${document.title} ${document.body.getAttribute("data-page-type") ?? ""}`).toLowerCase();
+    const overlays = genericElements([
+      "[role='dialog']",
+      "[aria-modal='true']",
+      "[class*='cart-drawer' i]",
+      "[class*='cart-drawer' i] *",
+      "[class*='mini-cart' i]",
+      "[class*='mini-cart' i] *",
+      "[id*='cart-drawer' i]",
+      "[id*='cart-drawer' i] *",
+      "[class*='checkout' i]",
+      "[class*='checkout' i] *",
+    ].join(","));
+    const overlayHint = overlays
+      .map((element) => cleanText(element.textContent ?? ""))
+      .filter((text) => text.length > 0 && text.length <= 800)
+      .slice(0, 30)
+      .join(" ");
+    const headingHint = genericElements("main h1, main h2, [role='main'] h1, [role='main'] h2")
+      .map((element) => cleanText(element.textContent ?? ""))
+      .slice(0, 12)
+      .join(" ");
+    const hint = cleanText(`${document.title} ${document.body.getAttribute("data-page-type") ?? ""} ${overlayHint} ${headingHint}`).toLowerCase();
     if (/payment|place order|complete order|review order|order review|付款|支付|提交订单|zahlung|paiement|pago/.test(hint)) return { pageType: "review", step: 4 };
+    if (/cart|basket|bag|your order|continue to checkout|购物车|购物袋|去结账|warenkorb|panier|carrito/.test(hint)) return { pageType: "cart", step: 2 };
     if (/shipping|delivery|contact information|customer information|checkout|配送|收货|结账|versand|livraison|envío/.test(hint)) return { pageType: "details", step: 3 };
-    if (/cart|basket|bag|购物车|购物袋|warenkorb|panier|carrito/.test(hint)) return { pageType: "cart", step: 2 };
     return { pageType: /pricing|plans|subscription|价格|套餐|订阅|tarife|abonnement/.test(hint) ? "pricing" : "product", step: 1 };
   }
 
