@@ -48,7 +48,7 @@ An online shopper considering a product, subscription, ticket, or free trial in 
 - Universal compatibility with all websites
 - Unsupported performance claims
 
-## Day 14 success criteria
+## Release success criteria
 
 - A Chrome-compatible extension completes one end-to-end audit.
 - A controlled demo store contains normal and risky paired flows.
@@ -56,4 +56,3 @@ An online shopper considering a product, subscription, ticket, or free trial in 
 - Evaluation compares rules, text-only detection, and full-flow detection.
 - Every published metric is reproducible from the repository.
 - A public demo, repository, and two-minute video are ready for Devpost.
-

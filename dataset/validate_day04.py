@@ -64,7 +64,7 @@ def main() -> None:
     split_counts = Counter(row["split"] for row in flows)
     assert labels == Counter({"normal": 30, "hidden_fee": 10, "preselected_addon": 10, "trial_to_paid": 10})
     assert split_counts == Counter({"train": 36, "validation": 12, "test": 12})
-    print("FairFlow-Bench Day 4 validation passed")
+    print("FairFlow-Bench release validation passed")
     print(f"Flows: {len(flows)} | States: {len(states)} | Pairs: {len(pairs)}")
     print(f"Templates: train=6, validation=2, test=2")
     print("Labels: " + ", ".join(f"{key}={labels[key]}" for key in sorted(labels)))

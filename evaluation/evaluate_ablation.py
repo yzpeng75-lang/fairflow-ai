@@ -82,7 +82,7 @@ def main() -> None:
     experiments["final_page_rules"] = [final_page_rules(grouped[flow["flow_id"]][-1]) for flow in test]
     experiments["full_flow_engine"] = [full_flow_prediction(grouped[flow["flow_id"]]) for flow in test]
     report = {
-        "experiment": "Day 11 template-disjoint ablation",
+        "experiment": "Template-disjoint ablation",
         "train_flows": len(train),
         "test_flows": len(test),
         "train_templates": 6,
@@ -102,4 +102,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

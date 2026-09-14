@@ -63,7 +63,7 @@ def validate() -> None:
             if Decimal(row[field]) < 0:
                 fail(f"{row['flow_id']}: {field} cannot be negative")
 
-        # Day 2 duplicates the provisional seed label across these fields only
+        # The seed release duplicates the provisional label across these fields only.
         # to exercise the future review schema. This is not human agreement.
         if not (
             row["annotator_1"]
@@ -71,7 +71,7 @@ def validate() -> None:
             == row["adjudicated_label"]
             == label
         ):
-            fail(f"{row['flow_id']}: Day 2 seed-label fixture is inconsistent")
+            fail(f"{row['flow_id']}: seed-label fixture is inconsistent")
 
         if label == "normal" and row["severity"] != "none":
             fail(f"{row['flow_id']}: normal flow must have no severity")
@@ -102,7 +102,7 @@ def validate() -> None:
         if label_counts[label] < 5:
             fail(f"{label}: expected at least five examples")
 
-    print("FairFlow-Bench Day 2 schema validation passed")
+    print("FairFlow-Bench seed schema validation passed")
     print("Review status: provisional seed labels; independent human review pending")
     print(f"Rows: {len(rows)} | Pairs: {len(pairs)}")
     print("Labels: " + ", ".join(f"{k}={label_counts[k]}" for k in sorted(LABELS)))

@@ -1,6 +1,6 @@
 {
   "engine": "FairFlow-Engine-v0.1",
-  "dataset": "FairFlow-Bench Day 4 full controlled release",
+  "dataset": "FairFlow-Bench full controlled release",
   "scope": "synthetic controlled benchmark only",
   "examples": 60,
   "accuracy": 1.0,

@@ -69,7 +69,7 @@ def main() -> None:
     f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0
     report = {
         "detector": "RenewalLens-v0.1",
-        "dataset": "FairFlow-Bench Day 4 trial-to-paid controlled pairs",
+        "dataset": "FairFlow-Bench trial-to-paid controlled pairs",
         "scope": "synthetic controlled benchmark only",
         "examples": len(predictions),
         "confusion_matrix": {"tp": tp, "tn": tn, "fp": fp, "fn": fn},
@@ -84,4 +84,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

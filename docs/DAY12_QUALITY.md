@@ -1,4 +1,4 @@
-# Day 12 — quality and safety hardening
+# Quality and safety hardening
 
 ## Implemented controls
 
@@ -21,4 +21,3 @@
 - Clear an audit and confirm stored snapshots disappear.
 
 Automated static checks cover required privacy and accessibility contracts. They complement rather than replace manual assistive-technology testing.
-

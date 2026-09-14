@@ -52,10 +52,10 @@ Record trial duration, recurring price, billing interval, and the first disclosu
 
 ## Paired-sample rule
 
-Every Day 2 risk flow must have exactly one normal partner with the same `pair_id`, `template_id`, language, scenario, and number of steps. The pair should differ only in the factor named by `changed_factor`.
+Every risk flow must have exactly one normal partner with the same `pair_id`, `template_id`, language, scenario, and number of steps. The pair should differ only in the factor named by `changed_factor`.
 
 ## Independent review
 
 Two annotators label a flow independently. When their labels differ, they discuss the evidence using this document and store the resolved value in `adjudicated_label`. Agreement is reported separately from model accuracy.
 
-The values currently present in the Day 2 CSV are duplicated seed-label fixtures used to exercise the schema validator. They are not independent annotations and must never be presented as measured agreement. Genuine review is scheduled after the page-state flows exist.
+The values currently present in the seed CSV are duplicated label fixtures used to exercise the schema validator. They are not independent annotations and must never be presented as measured agreement. Genuine review is required before claiming measured agreement.

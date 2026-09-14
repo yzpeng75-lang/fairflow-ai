@@ -32,7 +32,7 @@ export default function App() {
 
   if (!selected) {
     return <main className="lab-shell">
-      <header className="lab-header"><div><p className="kicker">FAIRFLOW RESEARCH ENVIRONMENT</p><h1>Checkout Lab</h1><p className="intro">Three evidence detectors combined into one auditable risk score.</p></div><div className="lab-stamp">DAY 08</div></header>
+      <header className="lab-header"><div><p className="kicker">FAIRFLOW RESEARCH ENVIRONMENT</p><h1>Checkout Lab</h1><p className="intro">Three evidence detectors combined into one auditable risk score.</p></div></header>
       <section className="pair-grid">{flows.map((flow) => <button className="flow-card" key={flow.id} onClick={() => start(flow)}><span className="card-topline"><span>{flow.pairId.replace("demo_pair_", "")}</span><span className={`label ${flow.label}`}>{flow.label.replaceAll("_", " ")}</span></span><strong>{flow.product}</strong><small>{flow.changedFactor.replaceAll("_", " ")}</small></button>)}</section>
       <footer className="lab-note">Select two flows with the same pair name to compare one controlled design change.</footer>
     </main>;

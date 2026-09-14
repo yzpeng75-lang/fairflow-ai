@@ -1,4 +1,4 @@
-# Day 11 — template-disjoint ablation
+# Template-disjoint ablation
 
 ## Question
 
@@ -26,4 +26,3 @@ The final page often contains identical fee or renewal language in both members 
 ## Interpretation limits
 
 The benchmark is synthetic and constructed around FairFlow’s three target patterns. The perfect full-flow score is a pipeline correctness result, not proof of real-world generalization. The text baseline is intentionally small and is not presented as a state-of-the-art language model.
-
