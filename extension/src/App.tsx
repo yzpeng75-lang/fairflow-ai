@@ -65,6 +65,11 @@ export default function App() {
   }
 
   const excludedCount = evidence.reduce((sum, item) => sum + item.excludedSensitiveFieldCount, 0);
+  const analysisBlockReason = apiState !== "online"
+    ? "Start the local FairFlow service before analysis."
+    : evidence.length < 2
+      ? `Capture ${2 - evidence.length} more checkout step${evidence.length === 0 ? "s" : ""} before analysis.`
+      : "";
 
   return <main className="shell" aria-busy={busy}>
     <header><div className="brand"><span aria-hidden="true">F</span><div>FairFlow AI<small>Private evidence capture</small></div></div><div className={`status ${apiState}`} role="status" aria-live="polite" aria-label={`Service ${apiState}`}>{apiState}</div></header>
@@ -76,9 +81,10 @@ export default function App() {
 
     <section className="controls">
       <button className="primary" onClick={capture} disabled={busy || !extensionMode}>{busy ? "Working…" : "Capture current step"}</button>
-      <button onClick={analyze} disabled={busy || evidence.length < 2 || apiState !== "online"}>Analyze evidence</button>
+      <button onClick={analyze} disabled={busy || Boolean(analysisBlockReason)} title={analysisBlockReason || "Analyze captured checkout evidence"}>Analyze evidence</button>
       <button className="text-button" onClick={reset} disabled={busy || evidence.length === 0}>Clear</button>
     </section>
+    {analysisBlockReason && <p className="analysis-hint">{analysisBlockReason}</p>}
 
     <section className="audit-card">
       <div className="section-heading"><span>LOCAL AUDIT TRAIL</span><strong>{evidence.length} step{evidence.length === 1 ? "" : "s"}</strong></div>
