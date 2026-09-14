@@ -1,4 +1,5 @@
 import { captureCheckoutEvidence, type PageEvidence } from "./capture";
+import type { UnifiedResult } from "./analysis";
 
 interface ChromeApi {
   tabs: { query(query: { active: boolean; currentWindow: boolean }): Promise<Array<{ id?: number; url?: string }>> };
@@ -9,7 +10,7 @@ interface ChromeApi {
     local: {
       get(key: string): Promise<Record<string, unknown>>;
       set(value: Record<string, unknown>): Promise<void>;
-      remove(key: string): Promise<void>;
+      remove(key: string | string[]): Promise<void>;
     };
   };
 }
@@ -58,6 +59,9 @@ export async function captureActiveTab(): Promise<PageEvidence> {
 }
 
 const STORAGE_KEY = "fairflow-current-audit";
+const RESULT_KEY = "fairflow-latest-result";
+const AUTO_ENABLED_KEY = "fairflow-auto-enabled";
+const DISABLED_ORIGINS_KEY = "fairflow-disabled-origins";
 const RETENTION_MS = 24 * 60 * 60 * 1000;
 const MAX_SNAPSHOTS = 20;
 
@@ -83,5 +87,50 @@ export async function saveEvidence(items: PageEvidence[]): Promise<void> {
 export async function clearEvidence(): Promise<void> {
   const chrome = api();
   if (!chrome) return;
-  await chrome.storage.local.remove(STORAGE_KEY);
+  await chrome.storage.local.remove([STORAGE_KEY, RESULT_KEY]);
+}
+
+export async function loadLatestResult(): Promise<UnifiedResult | null> {
+  const chrome = api();
+  if (!chrome) return null;
+  const stored = await chrome.storage.local.get(RESULT_KEY);
+  return stored[RESULT_KEY] && typeof stored[RESULT_KEY] === "object" ? stored[RESULT_KEY] as UnifiedResult : null;
+}
+
+export async function loadAutomaticMode(): Promise<boolean> {
+  const chrome = api();
+  if (!chrome) return false;
+  const stored = await chrome.storage.local.get(AUTO_ENABLED_KEY);
+  return stored[AUTO_ENABLED_KEY] !== false;
+}
+
+export async function setAutomaticMode(enabled: boolean): Promise<void> {
+  const chrome = api();
+  if (!chrome) return;
+  await chrome.storage.local.set({ [AUTO_ENABLED_KEY]: enabled });
+}
+
+async function activeOrigin(): Promise<string | null> {
+  const chrome = api();
+  if (!chrome) return null;
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  try { return tab?.url ? new URL(tab.url).origin : null; } catch { return null; }
+}
+
+export async function loadCurrentSiteEnabled(): Promise<boolean> {
+  const chrome = api();
+  const origin = await activeOrigin();
+  if (!chrome || !origin) return true;
+  const stored = await chrome.storage.local.get(DISABLED_ORIGINS_KEY);
+  return !(Array.isArray(stored[DISABLED_ORIGINS_KEY]) && stored[DISABLED_ORIGINS_KEY].includes(origin));
+}
+
+export async function setCurrentSiteEnabled(enabled: boolean): Promise<void> {
+  const chrome = api();
+  const origin = await activeOrigin();
+  if (!chrome || !origin) return;
+  const stored = await chrome.storage.local.get(DISABLED_ORIGINS_KEY);
+  const disabled = Array.isArray(stored[DISABLED_ORIGINS_KEY]) ? stored[DISABLED_ORIGINS_KEY] as string[] : [];
+  const updated = enabled ? disabled.filter((item) => item !== origin) : [...new Set([...disabled, origin])];
+  await chrome.storage.local.set({ [DISABLED_ORIGINS_KEY]: updated });
 }

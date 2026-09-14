@@ -24,6 +24,7 @@ CHECKS = [
     ("unified engine evaluation", [PYTHON, "evaluation/evaluate_unified_engine.py"]),
     ("ablation evaluation", [PYTHON, "evaluation/evaluate_ablation.py"]),
     ("privacy contract", [PYTHON, "extension/validate_privacy.py"]),
+    ("automatic monitoring contract", [PYTHON, "extension/validate_automatic.py"]),
     ("accessibility contract", [PYTHON, "extension/validate_accessibility.py"]),
     ("real-page capture adapter", [NPM, "--prefix", "extension", "run", "test:capture"]),
     ("demo store build", [NPM, "--prefix", "demo-store", "run", "build"]),
@@ -82,7 +83,7 @@ def run() -> int:
     )
     passed = all(result["passed"] for result in results)
     report = {
-        "release": "FairFlow AI 0.1.0",
+        "release": "FairFlow AI 0.2.0",
         "validated_revision": revision,
         "passed": passed,
         "checks_passed": sum(result["passed"] for result in results),

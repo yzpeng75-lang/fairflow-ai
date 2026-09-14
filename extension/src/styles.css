@@ -20,6 +20,16 @@ h1 { margin: 12px 0; font: 600 38px/.98 "Space Grotesk", sans-serif; letter-spac
 .notice, .error { margin-bottom: 14px; padding: 12px; border: 1px solid #384a41; color: #a8bbb0; background: #101d17; font-size: 11px; line-height: 1.5; }
 .error { border-color: #8b4a35; color: #ffc4ae; background: #2a1711; }
 .capture-success { margin-bottom: 14px; padding: 12px; border: 1px solid #347654; color: #9cf4c6; background: #10281c; font-size: 11px; line-height: 1.5; }
+.auto-card { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; margin-bottom: 18px; padding: 14px; border: 1px solid #347654; background: rgba(16,40,28,.82); }
+.auto-card strong, .auto-card small { display: block; }
+.auto-card strong { color: #dff8ea; font-size: 12px; }
+.auto-card small { margin-top: 3px; color: #79a68e; font-size: 9px; }
+.auto-card button { cursor: pointer; }
+.toggle { min-width: 46px; padding: 7px 10px; border: 1px solid #506158; border-radius: 999px; color: #899b91; background: #1a2620; font-size: 9px; font-weight: 700; }
+.toggle.active { border-color: #67f0ad; color: #07110c; background: #67f0ad; }
+.site-toggle { grid-column: 1 / -1; justify-self: start; padding: 0; border: 0; color: #94b9a5; background: transparent; font-size: 9px; text-decoration: underline; }
+.site-toggle:disabled { opacity: .4; cursor: not-allowed; }
+.manual-label { margin: 0 0 8px; color: #647b6f; font-size: 8px; font-weight: 600; letter-spacing: .16em; }
 .controls { justify-content: flex-start; gap: 8px; flex-wrap: wrap; }
 .controls button { padding: 10px 12px; border: 1px solid #3b5045; color: #d5e4dc; background: transparent; cursor: pointer; font-size: 11px; }
 .controls .primary { border-color: #67f0ad; color: #07110c; background: #67f0ad; font-weight: 600; }

@@ -2,7 +2,7 @@
 
 ## Data flow
 
-FairFlow runs only after an explicit user action. The injected extractor reads minimized public commerce metadata and visible checkout evidence, stores the current audit locally, and sends it only to the loopback analysis API at `127.0.0.1`.
+FairFlow automatically observes visible HTTP(S) pages while the global switch and current-site switch are enabled. The extractor ignores pages without reliable commerce evidence, stores a minimized checkout trail locally, and sends it only to the loopback analysis API at `127.0.0.1`.
 
 ## Collected
 
@@ -25,7 +25,7 @@ FairFlow runs only after an explicit user action. The injected extractor reads m
 
 ## Permission design
 
-The extension uses `activeTab` instead of permanent access to every site. It has no persistent content script and can contact only the local FairFlow API. The current audit remains in extension-local storage until the user clears it or the 24-hour retention window expires; storage is capped at 20 snapshots.
+Automatic monitoring requires a content script on HTTP(S) pages; this is the permission tradeoff that removes per-step user clicks. Monitoring is on by default, can be paused globally or for the current origin, ignores background tabs, and does no work when it cannot identify reliable checkout evidence. `activeTab` and `scripting` remain only for the manual fallback. Network host permission is limited to the local FairFlow API. The current audit remains in extension-local storage until the user clears it or the 24-hour retention window expires; storage is capped at 20 snapshots.
 
 ## Threats and mitigations
 
@@ -33,6 +33,6 @@ The extension uses `activeTab` instead of permanent access to every site. It has
 |---|---|
 | Sensitive form leakage | Sensitive-field exclusion, no reads of input values, evidence length limits, and an automated source guard. |
 | Accidental cross-flow mixing | Flow IDs must match and repeated steps replace earlier snapshots. |
-| Background surveillance | Capture begins only through the popup on the active tab. |
+| Background surveillance | The monitor exits unless the document is visible; global and per-site pause controls are provided. |
 | Remote evidence transmission | Host permission is restricted to the loopback API. |
 | Unsupported-site overclaim | Generic extraction accepts only visible, high-signal evidence and reports ambiguous pages as unsupported; controlled benchmark scores are never presented as universal real-site accuracy. |

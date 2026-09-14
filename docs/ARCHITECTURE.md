@@ -2,10 +2,11 @@
 
 ```mermaid
 flowchart LR
-    U[User clicks FairFlow] --> C[Active-tab and accessible-frame capture]
+    U[User browses a visible checkout] --> C[Automatic page and SPA observer]
+    F[Optional manual fallback] --> X
     C --> X[Annotated, platform, structured-data,\nShadow DOM, and heuristic adapters]
     X -->|minimized evidence only| S[(Extension-local storage\n24-hour retention)]
-    S --> A[Local FastAPI]
+    S -->|two distinct steps| A[Local FastAPI]
     A --> P[PriceTrace]
     A --> G[ChoiceGuard]
     A --> R[RenewalLens]
@@ -13,6 +14,7 @@ flowchart LR
     G --> E
     R --> E
     E --> O[Risk score, confidence,\nevidence, next action]
+    O --> B[Action badge and in-page risk alert]
 
     D[FairFlow-Bench\ncontrolled pairs] --> V[Template-disjoint evaluation]
     V --> P

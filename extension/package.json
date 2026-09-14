@@ -1,13 +1,14 @@
 {
   "name": "fairflow-extension",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --config vite.content.config.ts && vite build --config vite.worker.config.ts",
     "test:capture": "tsc -p tsconfig.capture-test.json && node --test tests/capture.test.mjs",
     "check:privacy": "python validate_privacy.py",
+    "check:automatic": "python validate_automatic.py",
     "check:accessibility": "python validate_accessibility.py",
     "preview": "vite preview"
   },

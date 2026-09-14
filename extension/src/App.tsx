@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { analyzeEvidence, type UnifiedResult } from "./analysis";
-import { captureActiveTab, clearEvidence, isExtensionRuntime, loadEvidence, saveEvidence } from "./chrome-api";
+import { captureActiveTab, clearEvidence, isExtensionRuntime, loadAutomaticMode, loadCurrentSiteEnabled, loadEvidence, loadLatestResult, saveEvidence, setAutomaticMode, setCurrentSiteEnabled } from "./chrome-api";
 import type { PageEvidence } from "./capture";
 
 
@@ -14,6 +14,8 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [captureNotice, setCaptureNotice] = useState("");
+  const [automaticMode, setAutomaticModeState] = useState(true);
+  const [siteEnabled, setSiteEnabledState] = useState(true);
   const extensionMode = isExtensionRuntime();
 
   useEffect(() => {
@@ -23,8 +25,27 @@ export default function App() {
         setApiState("online");
       })
       .catch(() => setApiState("offline"));
-    loadEvidence().then(setEvidence).catch(() => setEvidence([]));
+    Promise.all([loadEvidence(), loadLatestResult(), loadAutomaticMode(), loadCurrentSiteEnabled()])
+      .then(([storedEvidence, storedResult, automatic, currentSite]) => {
+        setEvidence(storedEvidence);
+        setResult(storedResult);
+        setAutomaticModeState(automatic);
+        setSiteEnabledState(currentSite);
+      })
+      .catch(() => setEvidence([]));
   }, []);
+
+  async function toggleAutomaticMode() {
+    const next = !automaticMode;
+    await setAutomaticMode(next);
+    setAutomaticModeState(next);
+  }
+
+  async function toggleCurrentSite() {
+    const next = !siteEnabled;
+    await setCurrentSiteEnabled(next);
+    setSiteEnabledState(next);
+  }
 
   async function capture() {
     setBusy(true);
@@ -78,14 +99,21 @@ export default function App() {
   return <main className="shell" aria-busy={busy}>
     <header><div className="brand"><span aria-hidden="true">F</span><div>FairFlow AI<small>Private evidence capture</small></div></div><div className={`status ${apiState}`} role="status" aria-live="polite" aria-label={`Service ${apiState}`}>{apiState}</div></header>
 
-    <section className="intro"><p className="eyebrow">PRIVACY-FIRST CHECKOUT AUDIT</p><h1>Capture the change,<br />not the customer.</h1><p>At each checkout step, capture only visible totals, fees, paid choices, and renewal terms.</p></section>
+    <section className="intro"><p className="eyebrow">AUTOMATIC CHECKOUT PROTECTION</p><h1>Browse normally.<br />FairFlow watches the price.</h1><p>Checkout steps are captured and analyzed automatically. Sensitive form values remain excluded.</p></section>
 
     {!extensionMode && <div className="notice">This preview shows the popup interface. Load the built <code>extension/dist</code> folder in Chrome to capture the active tab.</div>}
     {error && <div className="error" role="alert">{error}</div>}
     {captureNotice && <div className="capture-success" role="status">{captureNotice}</div>}
 
+    <section className="auto-card">
+      <div><strong>Automatic monitoring</strong><small>{automaticMode && siteEnabled ? "Watching this site" : automaticMode ? "Paused on this site" : "Paused everywhere"}</small></div>
+      <button className={automaticMode ? "toggle active" : "toggle"} onClick={toggleAutomaticMode} aria-pressed={automaticMode}>{automaticMode ? "ON" : "OFF"}</button>
+      <button className="site-toggle" onClick={toggleCurrentSite} disabled={!automaticMode}>{siteEnabled ? "Pause this site" : "Resume this site"}</button>
+    </section>
+
+    <div className="manual-label">MANUAL FALLBACK</div>
     <section className="controls">
-      <button className="primary" onClick={capture} disabled={busy || !extensionMode}>{busy ? "Working…" : "Capture current step"}</button>
+      <button className="primary" onClick={capture} disabled={busy || !extensionMode}>{busy ? "Working…" : "Capture now"}</button>
       <button onClick={analyze} disabled={busy || Boolean(analysisBlockReason)} title={analysisBlockReason || "Analyze captured checkout evidence"}>Analyze evidence</button>
       <button className="text-button" onClick={reset} disabled={busy || evidence.length === 0}>Clear</button>
     </section>
@@ -93,7 +121,7 @@ export default function App() {
 
     <section className="audit-card">
       <div className="section-heading"><span>LOCAL AUDIT TRAIL</span><strong>{evidence.length} step{evidence.length === 1 ? "" : "s"}</strong></div>
-      {evidence.length === 0 ? <p className="empty">Capture the product page first, continue checkout, then capture again before payment.</p> : <ol className="timeline">{evidence.map((item) => <li key={item.step}><span>S{item.step}</span><div><strong>{item.pageType}</strong><small>{item.currency} {item.visibleTotal.toFixed(2)} · {item.mandatoryFees.length} fees · {item.paidChoices.length} choices · {item.renewalTerms.length} renewal terms{item.trialOfferObserved ? " · trial observed" : ""}</small><small>{(item.extractionSource ?? "legacy").replaceAll("_", " ")} · {Math.round((item.captureConfidence ?? 0.7) * 100)}% capture confidence</small>{item.captureWarnings?.map((warning) => <small className="capture-warning" key={warning}>{warning}</small>)}</div></li>)}</ol>}
+      {evidence.length === 0 ? <p className="empty">No checkout evidence yet. Browse a product and continue to its cart; FairFlow will capture supported steps automatically.</p> : <ol className="timeline">{evidence.map((item) => <li key={item.step}><span>S{item.step}</span><div><strong>{item.pageType}</strong><small>{item.currency} {item.visibleTotal.toFixed(2)} · {item.mandatoryFees.length} fees · {item.paidChoices.length} choices · {item.renewalTerms.length} renewal terms{item.trialOfferObserved ? " · trial observed" : ""}</small><small>{(item.extractionSource ?? "legacy").replaceAll("_", " ")} · {Math.round((item.captureConfidence ?? 0.7) * 100)}% capture confidence</small>{item.captureWarnings?.map((warning) => <small className="capture-warning" key={warning}>{warning}</small>)}</div></li>)}</ol>}
     </section>
 
     <section className="privacy-card"><strong>Sensitive values excluded</strong><p>Names, email, addresses, passwords, card fields, page URLs, and form values are never captured.</p><small>{excludedCount} sensitive field appearances skipped across the stored snapshots.</small></section>

@@ -62,7 +62,9 @@ npm install
 npm run build
 ```
 
-Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `extension/dist`. Keep the local backend running, then capture at least two steps on the same real or controlled checkout before selecting **Analyze evidence**. The extension requests temporary active-tab access, has no persistent all-sites content script, and asks for review when page evidence is ambiguous.
+Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `extension/dist`. Keep the local backend running, then browse from a product page to its cart or checkout as usual. FairFlow automatically stores distinct visible steps, analyzes after two steps, and shows `OK` or `!` on the toolbar icon. The popup is only needed to review, pause, clear, or use manual capture as a fallback.
+
+Automatic operation requires access to HTTP(S) pages. Monitoring ignores background tabs and low-confidence non-commerce pages, never reads form values, and can be paused globally or for the current site.
 
 ### Controlled demo store
 
@@ -76,7 +78,7 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 
 ## Privacy principles
 
-- Audits begin only after the user explicitly starts them.
+- Automatic monitoring can be paused globally or per site.
 - Password, card, authentication, and address fields are excluded.
 - Evidence is minimized and processed locally whenever practical.
 - Every warning includes evidence and confidence.
@@ -89,7 +91,7 @@ Open `http://127.0.0.1:5174` and choose normal and risky variants from the same 
 - Reproducible benchmark with 60 flows, 240 page states, and template-disjoint splits.
 - PriceTrace, ChoiceGuard, and RenewalLens detectors with evidence and confidence.
 - Unified analysis engine with transparent risk scoring and actionable reports.
-- Privacy-first Chrome capture with local retention and explicit user activation.
+- Privacy-first automatic Chrome capture with visible-tab gating, local retention, and pause controls.
 - Generic real-page extraction for visible totals, fees, paid controls, trials, and recurring billing language.
 - Trainable text baseline and template-disjoint ablation evaluation.
 - Automated privacy, accessibility, data, API, evaluation, and build checks.

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+- Added automatic visible-tab checkout monitoring with debounced SPA and cart-drawer observation.
+- Added automatic local analysis, action badges, risk alerts, step deduplication, and site/global pause controls.
+- Retained manual capture as a fallback rather than the primary workflow.
+
 ## 0.1.1
 
 - Improved single-page cart drawer detection and visible capture confirmation.
