@@ -9,5 +9,5 @@
     "rootDir": "src",
     "outDir": "dist-test"
   },
-  "include": ["src/capture.ts"]
+  "include": ["src/capture.ts", "src/analysis.ts"]
 }

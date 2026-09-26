@@ -12,7 +12,7 @@ monitor = (ROOT / "src" / "auto-monitor.ts").read_text(encoding="utf-8")
 worker = (ROOT / "src" / "service-worker.ts").read_text(encoding="utf-8")
 
 assert set(manifest["permissions"]) == {"activeTab", "scripting", "storage"}
-assert manifest["host_permissions"] == ["http://127.0.0.1:8000/*"]
+assert "host_permissions" not in manifest
 assert len(manifest["content_scripts"]) == 1
 content_script = manifest["content_scripts"][0]
 assert set(content_script["matches"]) == {"http://*/*", "https://*/*"}
@@ -25,8 +25,8 @@ assert ".value" not in capture + monitor + worker
 assert "location.href" not in capture
 for required_filter in ("type='password'", "type='email'", "autocomplete*='cc-'", "data-ff-sensitive"):
     assert required_filter in capture
-assert "http://127.0.0.1:8000/api/v1/analyze/checkout" in analysis
-assert "AbortController" in analysis
+assert "fetch(" not in analysis
+assert "PriceTrace-v0.2-local" in analysis
 assert 'document.visibilityState !== "visible"' in monitor
 assert "fairflow-auto-enabled" in monitor
 assert "fairflow-disabled-origins" in monitor

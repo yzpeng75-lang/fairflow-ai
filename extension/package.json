@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && vite build --config vite.content.config.ts && vite build --config vite.worker.config.ts",
-    "test:capture": "tsc -p tsconfig.capture-test.json && node --test tests/capture.test.mjs",
+    "test:capture": "tsc -p tsconfig.capture-test.json && node --test tests/*.test.mjs",
     "check:privacy": "python validate_privacy.py",
     "check:automatic": "python validate_automatic.py",
     "check:accessibility": "python validate_accessibility.py",

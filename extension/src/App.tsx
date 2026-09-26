@@ -5,10 +5,7 @@ import { captureActiveTab, clearEvidence, isExtensionRuntime, loadAutomaticMode,
 import type { PageEvidence } from "./capture";
 
 
-type ApiState = "checking" | "online" | "offline";
-
 export default function App() {
-  const [apiState, setApiState] = useState<ApiState>("checking");
   const [evidence, setEvidence] = useState<PageEvidence[]>([]);
   const [result, setResult] = useState<UnifiedResult | null>(null);
   const [busy, setBusy] = useState(false);
@@ -19,12 +16,6 @@ export default function App() {
   const extensionMode = isExtensionRuntime();
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/health")
-      .then((response) => {
-        if (!response.ok) throw new Error("API unavailable");
-        setApiState("online");
-      })
-      .catch(() => setApiState("offline"));
     Promise.all([loadEvidence(), loadLatestResult(), loadAutomaticMode(), loadCurrentSiteEnabled()])
       .then(([storedEvidence, storedResult, automatic, currentSite]) => {
         setEvidence(storedEvidence);
@@ -90,14 +81,12 @@ export default function App() {
   }
 
   const excludedCount = evidence.reduce((sum, item) => sum + item.excludedSensitiveFieldCount, 0);
-  const analysisBlockReason = apiState !== "online"
-    ? "Start the local FairFlow service before analysis."
-    : evidence.length < 2
-      ? `Capture ${2 - evidence.length} more checkout step${evidence.length === 0 ? "s" : ""} before analysis.`
-      : "";
+  const analysisBlockReason = evidence.length < 2
+    ? `Capture ${2 - evidence.length} more checkout step${evidence.length === 0 ? "s" : ""} before analysis.`
+    : "";
 
   return <main className="shell" aria-busy={busy}>
-    <header><div className="brand"><span aria-hidden="true">F</span><div>FairFlow AI<small>Private evidence capture</small></div></div><div className={`status ${apiState}`} role="status" aria-live="polite" aria-label={`Service ${apiState}`}>{apiState}</div></header>
+    <header><div className="brand"><span aria-hidden="true">F</span><div>FairFlow AI<small>Private evidence capture</small></div></div><div className="status online" role="status" aria-live="polite" aria-label="Analysis ready">on-device</div></header>
 
     <section className="intro"><p className="eyebrow">AUTOMATIC CHECKOUT PROTECTION</p><h1>Browse normally.<br />FairFlow watches the price.</h1><p>Checkout steps are captured and analyzed automatically. Sensitive form values remain excluded.</p></section>
 

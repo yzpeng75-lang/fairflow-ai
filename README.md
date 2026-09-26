@@ -41,14 +41,14 @@ fairflow-ai/
 
 ## Quick start
 
-### Backend
+### Optional research API
 
 ```powershell
 cd backend
 python -m uvicorn app.main:app --reload --port 8000
 ```
 
-Open `http://127.0.0.1:8000/health`. The expected response is:
+The extension does not require this service. It remains available for API experiments and reproducibility. Its health response is:
 
 ```json
 {"status":"ok","service":"fairflow-api","version":"0.1.0"}
@@ -62,7 +62,7 @@ npm install
 npm run build
 ```
 
-Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `extension/dist`. Keep the local backend running, then browse from a product page to its cart or checkout as usual. FairFlow automatically stores distinct visible steps, analyzes after two steps, and shows `OK` or `!` on the toolbar icon. The popup is only needed to review, pause, clear, or use manual capture as a fallback.
+Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select `extension/dist`. Browse from a product page to its cart or checkout as usual—no server or terminal is required. FairFlow stores distinct visible steps, analyzes them on-device after two steps, and shows `OK` or `!` on the toolbar icon. The popup is only needed to review, pause, clear, or use manual capture as a fallback.
 
 Automatic operation requires access to HTTP(S) pages. Monitoring ignores background tabs and low-confidence non-commerce pages, never reads form values, and can be paused globally or for the current site.
 

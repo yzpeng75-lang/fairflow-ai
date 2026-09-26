@@ -8,7 +8,6 @@
     "default_title": "Audit this checkout with FairFlow"
   },
   "permissions": ["activeTab", "scripting", "storage"],
-  "host_permissions": ["http://127.0.0.1:8000/*"],
   "background": {
     "service_worker": "service-worker.js"
   },

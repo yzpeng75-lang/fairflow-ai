@@ -1,6 +1,6 @@
 # FairFlow Chrome extension
 
-The extension automatically captures a minimized checkout trail from the visible tab and sends it to the local FairFlow API after two distinct checkout steps are observed.
+The extension automatically captures a minimized checkout trail from the visible tab and analyzes it entirely on-device after two distinct checkout steps are observed.
 
 ## Build and load
 
@@ -14,11 +14,10 @@ In Chrome, open `chrome://extensions`, enable Developer mode, select **Load unpa
 
 ## Automatic workflow
 
-1. Keep the local FairFlow API running.
-2. Browse a supported product, cart, and checkout normally.
-3. FairFlow observes visible page changes, deduplicates steps, and analyzes automatically after two distinct steps.
-4. A red `!` badge and an in-page alert indicate a supported risk; `OK` indicates that no supported risk was found.
-5. Open the popup only to review evidence, pause monitoring, clear the trail, or use the manual fallback.
+1. Browse a supported product, cart, and checkout normally.
+2. FairFlow observes visible page changes, deduplicates steps, and analyzes automatically after two distinct steps.
+3. A red `!` badge and an in-page alert indicate a supported risk; `OK` indicates that no supported risk was found.
+4. Open the popup only to review evidence, pause monitoring, clear the trail, or use the manual fallback.
 
 Capturing the same step again replaces the earlier snapshot. Switching origins starts a new local audit. Monitoring is enabled by default and can be paused globally or for the current site.
 
@@ -30,7 +29,8 @@ Capturing the same step again replaces the earlier snapshot. Switching origins s
 | `activeTab` | Supports the optional manual capture fallback. |
 | `scripting` | Runs the manual extractor across accessible frames when requested. |
 | `storage` | Keeps the current audit trail locally between popup openings. |
-| `http://127.0.0.1:8000/*` | Sends evidence to the local FairFlow analysis service. |
+
+No host permission is needed for an analysis server; detection runs inside the extension.
 
 The automatic content script runs on HTTP(S) pages but exits immediately for background tabs, paused sites, pages without a reliable price candidate, and evidence below the confidence threshold. It does not read form values or send evidence to a remote service.
 
