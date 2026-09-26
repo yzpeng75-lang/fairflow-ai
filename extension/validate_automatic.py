@@ -22,6 +22,10 @@ assert "fairflow-current-audit" in worker
 assert "fairflow-latest-result" in worker
 assert "setBadgeText" in worker
 assert "captureQueue" in worker
+assert "pushState" in monitor
+assert "replaceState" in monitor
+assert "fairflow-active-tab" in worker
+assert "hostedCheckoutContinuation" in worker
 
 print("FairFlow automatic monitoring contract passed")
 print("Visible-page observation, deduplication, automatic analysis, badges, and alerts are wired")

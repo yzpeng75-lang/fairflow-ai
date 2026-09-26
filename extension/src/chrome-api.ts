@@ -60,6 +60,7 @@ export async function captureActiveTab(): Promise<PageEvidence> {
 
 const STORAGE_KEY = "fairflow-current-audit";
 const RESULT_KEY = "fairflow-latest-result";
+const ACTIVE_TAB_KEY = "fairflow-active-tab";
 const AUTO_ENABLED_KEY = "fairflow-auto-enabled";
 const DISABLED_ORIGINS_KEY = "fairflow-disabled-origins";
 const RETENTION_MS = 24 * 60 * 60 * 1000;
@@ -87,7 +88,7 @@ export async function saveEvidence(items: PageEvidence[]): Promise<void> {
 export async function clearEvidence(): Promise<void> {
   const chrome = api();
   if (!chrome) return;
-  await chrome.storage.local.remove([STORAGE_KEY, RESULT_KEY]);
+  await chrome.storage.local.remove([STORAGE_KEY, RESULT_KEY, ACTIVE_TAB_KEY]);
 }
 
 export async function loadLatestResult(): Promise<UnifiedResult | null> {

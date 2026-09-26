@@ -91,6 +91,16 @@ observer.observe(document.documentElement, {
 });
 window.addEventListener("pageshow", scheduleInspection);
 window.addEventListener("popstate", scheduleInspection);
+const originalPushState = history.pushState.bind(history);
+history.pushState = (data: unknown, unused: string, url?: string | URL | null) => {
+  originalPushState(data, unused, url);
+  scheduleInspection();
+};
+const originalReplaceState = history.replaceState.bind(history);
+history.replaceState = (data: unknown, unused: string, url?: string | URL | null) => {
+  originalReplaceState(data, unused, url);
+  scheduleInspection();
+};
 document.addEventListener("visibilitychange", scheduleInspection);
 document.addEventListener("change", scheduleInspection, true);
 document.addEventListener("click", scheduleInspection, true);

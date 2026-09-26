@@ -35,7 +35,9 @@ declare const chrome: ExtensionWorkerApi;
 
 const EVIDENCE_KEY = "fairflow-current-audit";
 const RESULT_KEY = "fairflow-latest-result";
+const ACTIVE_TAB_KEY = "fairflow-active-tab";
 const MAX_SNAPSHOTS = 20;
+const CONTINUATION_MS = 30 * 60 * 1000;
 
 function quality(item: PageEvidence): number {
   return item.captureConfidence + (item.mandatoryFees.length + item.paidChoices.length + item.renewalTerms.length) * 0.03;
@@ -56,18 +58,22 @@ async function handleCapture(message: AutoCaptureMessage, sender: MessageSender)
   } catch {
     // Keep the extractor's origin if Chrome reports a non-standard tab URL.
   }
-  const evidence: PageEvidence = message.evidence.extractionSource === "annotated"
+  let evidence: PageEvidence = message.evidence.extractionSource === "annotated"
     ? message.evidence
     : { ...message.evidence, origin: topOrigin, flowId: `${topOrigin}-checkout` };
-  const stored = await chrome.storage.local.get([EVIDENCE_KEY, RESULT_KEY]);
+  const stored = await chrome.storage.local.get([EVIDENCE_KEY, RESULT_KEY, ACTIVE_TAB_KEY]);
   const previous = Array.isArray(stored[EVIDENCE_KEY]) ? stored[EVIDENCE_KEY] as PageEvidence[] : [];
+  const sameTab = sender.tab?.id != null && stored[ACTIVE_TAB_KEY] === sender.tab.id;
+  const latestCapture = previous.reduce((latest, item) => Math.max(latest, Date.parse(item.capturedAt) || 0), 0);
+  const hostedCheckoutContinuation = sameTab && previous.length > 0 && evidence.step > 1 && Date.now() - latestCapture <= CONTINUATION_MS;
+  if (hostedCheckoutContinuation) evidence = { ...evidence, flowId: previous[0].flowId };
   const sameFlow = previous.filter((item) => item.flowId === evidence.flowId);
   const existing = sameFlow.find((item) => item.step === evidence.step);
   const retained = existing && quality(existing) > quality(evidence) ? existing : evidence;
   const updated = [...sameFlow.filter((item) => item.step !== evidence.step), retained]
     .sort((left, right) => left.step - right.step)
     .slice(-MAX_SNAPSHOTS);
-  await chrome.storage.local.set({ [EVIDENCE_KEY]: updated });
+  await chrome.storage.local.set({ [EVIDENCE_KEY]: updated, [ACTIVE_TAB_KEY]: sender.tab?.id });
 
   if (updated.length < 2) {
     await chrome.storage.local.remove(RESULT_KEY);

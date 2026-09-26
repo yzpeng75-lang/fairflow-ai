@@ -43,9 +43,10 @@ export default function App() {
     setError("");
     setCaptureNotice("");
     try {
-      const snapshot = await captureActiveTab();
+      let snapshot = await captureActiveTab();
       if (evidence.length && evidence[0].flowId !== snapshot.flowId) {
-        throw new Error("This is a different checkout flow. Clear the current audit before capturing it.");
+        if (snapshot.step <= 1) throw new Error("This is a different checkout flow. Clear the current audit before capturing it.");
+        snapshot = { ...snapshot, flowId: evidence[0].flowId };
       }
       const updated = [...evidence.filter((item) => item.step !== snapshot.step), snapshot]
         .sort((left, right) => left.step - right.step);

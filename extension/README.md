@@ -41,4 +41,6 @@ FairFlow uses two extraction paths:
 - Explicit `data-ff-*` roles provide deterministic evidence in the controlled research environment.
 - A privacy-preserving adapter stack reads Schema.org/JSON-LD and commerce metadata, recognizes common Shopify, WooCommerce, and hosted-checkout structures, searches open Shadow DOM and accessible payment frames, and falls back to scored visible text across multiple currencies and languages.
 
+Version 0.4 also supports SPA route changes, checkout hand-offs to another domain in the same tab, ARIA checkbox/radio/switch controls, button-only protection offers, superscript cents, and both `1,299.00` and `1.299,00` number formats.
+
 Because commerce markup varies, generic captures are evidence candidates rather than claims of universal compatibility. The popup shows the extraction source, capture confidence, and warnings so the user can review ambiguous evidence before analysis. FairFlow never reads form values, page URL paths, names, email addresses, addresses, passwords, or card fields.

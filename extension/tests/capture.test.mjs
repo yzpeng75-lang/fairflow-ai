@@ -186,3 +186,34 @@ test("captures button-based default shipping protection as a paid choice", async
   });
   assert.equal(result.mandatoryFees.length, 0);
 });
+
+test("parses European thousands and decimal separators", async () => {
+  const result = await loadCapture(`
+    <html><head><title>Cart</title></head><body><main>
+      <strong class="order-total">Gesamtbetrag 1.299,00 €</strong>
+    </main></body></html>
+  `, "https://merchant.example/warenkorb");
+  assert.equal(result.currency, "EUR");
+  assert.equal(result.visibleTotal, 1299);
+});
+
+test("captures accessible switch controls and generic opt-out button flows", async () => {
+  const switchResult = await loadCapture(`
+    <html><head><title>Cart</title></head><body><main>
+      <strong class="order-total">Total $25.00</strong>
+      <div role="switch" aria-checked="true" id="cover-switch">Package cover $1.50</div>
+    </main></body></html>
+  `, "https://merchant.example/cart");
+  assert.equal(switchResult.paidChoices[0].selected, true);
+  assert.equal(switchResult.paidChoices[0].selectionOrigin, "page_default");
+
+  const buttonResult = await loadCapture(`
+    <html><head><title>Basket</title></head><body><main>
+      <strong class="order-total">Total £20.00</strong>
+      <section><h3>Parcel coverage</h3><span class="cost">£1.25</span>
+        <button>Include coverage</button><button>Continue without coverage</button>
+      </section>
+    </main></body></html>
+  `, "https://merchant.example/basket");
+  assert.equal(buttonResult.paidChoices[0].price, 1.25);
+});

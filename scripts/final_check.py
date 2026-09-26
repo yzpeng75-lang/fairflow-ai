@@ -83,7 +83,7 @@ def run() -> int:
     )
     passed = all(result["passed"] for result in results)
     report = {
-        "release": "FairFlow AI 0.2.0",
+        "release": "FairFlow AI 0.4.0",
         "validated_revision": revision,
         "passed": passed,
         "checks_passed": sum(result["passed"] for result in results),

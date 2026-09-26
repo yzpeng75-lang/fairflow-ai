@@ -71,12 +71,22 @@ export function captureCheckoutEvidence(): PageEvidence | null {
   }
 
   function numericAmount(raw: string): number {
-    const compact = raw.replace(/\s/g, "");
-    if (compact.includes(",") && !compact.includes(".")) {
+    const compact = raw.replace(/[\s']/g, "");
+    const comma = compact.lastIndexOf(",");
+    const dot = compact.lastIndexOf(".");
+    if (comma >= 0 && dot >= 0) {
+      const decimal = comma > dot ? "," : ".";
+      const thousands = decimal === "," ? "." : ",";
+      return Number(compact.replaceAll(thousands, "").replace(decimal, "."));
+    }
+    if (comma >= 0) {
       const decimalComma = /,\d{1,2}$/.test(compact);
       return Number(decimalComma ? compact.replace(",", ".") : compact.replaceAll(",", ""));
     }
-    return Number(compact.replaceAll(",", ""));
+    if ((compact.match(/\./g) ?? []).length > 1 || /\.\d{3}$/.test(compact)) {
+      return Number(compact.replaceAll(".", ""));
+    }
+    return Number(compact);
   }
 
   function amounts(text: string): number[] {
@@ -252,7 +262,8 @@ export function captureCheckoutEvidence(): PageEvidence | null {
       .map((element) => cleanText(element.textContent ?? ""))
       .slice(0, 12)
       .join(" ");
-    const hint = cleanText(`${document.title} ${document.body.getAttribute("data-page-type") ?? ""} ${overlayHint} ${headingHint}`).toLowerCase();
+    const pathHint = location.pathname.replace(/[-_/]+/g, " ");
+    const hint = cleanText(`${document.title} ${document.body.getAttribute("data-page-type") ?? ""} ${pathHint} ${overlayHint} ${headingHint}`).toLowerCase();
     if (/payment|place order|complete order|review order|order review|付款|支付|提交订单|zahlung|paiement|pago/.test(hint)) return { pageType: "review", step: 4 };
     if (/cart|basket|bag|your order|continue to checkout|购物车|购物袋|去结账|warenkorb|panier|carrito/.test(hint)) return { pageType: "cart", step: 2 };
     if (/shipping|delivery|contact information|customer information|checkout|配送|收货|结账|versand|livraison|envío/.test(hint)) return { pageType: "details", step: 3 };
@@ -279,26 +290,28 @@ export function captureCheckoutEvidence(): PageEvidence | null {
     }).slice(0, 20);
   }
 
-  function choiceFromContainer(element: HTMLElement, index: number, annotated: boolean, suppliedControl?: HTMLInputElement): CapturedChoice | null {
-    const control = suppliedControl ?? element.querySelector<HTMLInputElement>("input[type='checkbox'], input[type='radio']");
+  function choiceFromContainer(element: HTMLElement, index: number, annotated: boolean, suppliedControl?: HTMLElement): CapturedChoice | null {
+    const control = suppliedControl ?? element.querySelector<HTMLElement>("input[type='checkbox'], input[type='radio'], [role='checkbox'], [role='radio'], [role='switch']");
     if (!control || isSensitive(control)) return null;
     const text = readableText(element);
     const price = amount(text);
     if (price <= 0 || text.length > 260) return null;
     const declaredDefault = control.dataset.ffDefaultSelected;
-    const defaultSelected = declaredDefault === "true" || (declaredDefault == null && control.defaultChecked);
-    const selected = control.checked;
+    const nativeControl = control.tagName === "INPUT" ? control as HTMLInputElement : null;
+    const ariaSelected = control.getAttribute("aria-checked") === "true";
+    const defaultSelected = declaredDefault === "true" || (declaredDefault == null && (nativeControl?.defaultChecked ?? ariaSelected));
+    const selected = nativeControl?.checked ?? ariaSelected;
     const selectionOrigin: CapturedChoice["selectionOrigin"] = defaultSelected
       ? "page_default"
       : annotated && selected
         ? "user_action"
         : "unknown";
     return {
-      controlId: control.id || control.name || `optional-choice-${index + 1}`,
+      controlId: control.id || control.getAttribute("name") || `optional-choice-${index + 1}`,
       label: (labelWithoutPrice(text) || "Optional paid choice").slice(0, 160),
       price,
       selected,
-      required: control.required,
+      required: nativeControl?.required ?? control.getAttribute("aria-required") === "true",
       selectionOrigin,
     };
   }
@@ -308,9 +321,9 @@ export function captureCheckoutEvidence(): PageEvidence | null {
     if (annotated.length) {
       return annotated.map((element, index) => choiceFromContainer(element, index, true)).filter((item): item is CapturedChoice => item !== null);
     }
-    const controls = genericElements("input[type='checkbox'], input[type='radio']") as HTMLInputElement[];
+    const controls = genericElements("input[type='checkbox'], input[type='radio'], [role='checkbox'], [role='radio'], [role='switch']") as HTMLElement[];
     const nativeChoices = controls.map((control, index) => {
-      const container = control.closest<HTMLElement>("label, [role='checkbox'], [role='radio'], li, tr, [class*='option' i], [class*='addon' i]") ?? control.parentElement;
+      const container = control.closest<HTMLElement>("label, [role='checkbox'], [role='radio'], [role='switch'], li, tr, [class*='option' i], [class*='addon' i]") ?? control.parentElement;
       return container ? choiceFromContainer(container, index, false, control) : null;
     }).filter((item): item is CapturedChoice => item !== null).slice(0, 30);
 
@@ -318,13 +331,26 @@ export function captureCheckoutEvidence(): PageEvidence | null {
       "[id*='protection' i]", "[class*='protection' i]", "[id*='insurance' i]", "[class*='insurance' i]",
       "[id*='warranty' i]", "[class*='warranty' i]", "[id*='nvd-' i]", "[class*='nvd-' i]",
     ].join(","));
+    const optOutActions = genericElements("button, a, [role='button']").filter((element) =>
+      /(checkout without|continue without|without (?:protection|insurance|coverage|warranty)|remove (?:protection|insurance|coverage|warranty)|decline|no thanks|opt.?out|不需要|移除)/i.test(readableText(element)),
+    );
+    for (const action of optOutActions) {
+      let ancestor = action.parentElement;
+      for (let depth = 0; ancestor && depth < 7; depth += 1, ancestor = ancestor.parentElement) {
+        const text = readableText(ancestor);
+        if (text.length <= 1200 && /(protection|insurance|coverage|warranty|保障|保险)/i.test(text)) {
+          customContainers.push(ancestor);
+          break;
+        }
+      }
+    }
     const customChoices: CapturedChoice[] = [];
-    for (const container of customContainers) {
+    for (const container of [...new Set(customContainers)]) {
       const text = readableText(container);
       if (text.length === 0 || text.length > 1200) continue;
-      if (!/(protection|insurance|warranty|保障|保险)/i.test(text)) continue;
-      const hasOptOut = /(without protection|remove protection|decline|no thanks|opt.?out|checkout without|不需要保障|移除保险)/i.test(text);
-      const hasProtectedPath = /(protected checkout|add protection|include protection|保障结账|加入保险)/i.test(text);
+      if (!/(protection|insurance|coverage|warranty|保障|保险)/i.test(text)) continue;
+      const hasOptOut = /(checkout without|continue without|without (?:protection|insurance|coverage|warranty)|remove (?:protection|insurance|coverage|warranty)|decline|no thanks|opt.?out|不需要|移除)/i.test(text);
+      const hasProtectedPath = /(protected checkout|add (?:protection|insurance|coverage|warranty)|include (?:protection|insurance|coverage|warranty)|保障结账|加入保险)/i.test(text);
       if (!hasOptOut || !hasProtectedPath) continue;
       const priceElements = [...container.querySelectorAll<HTMLElement>("[class*='price' i], [id*='price' i], [data-price]")]
         .filter(isVisible)
