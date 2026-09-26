@@ -58,6 +58,18 @@ export function captureCheckoutEvidence(): PageEvidence | null {
     return text.replace(/\s+/g, " ").trim();
   }
 
+  function readableText(element: Element): string {
+    function visit(node: Node): string {
+      if (node.nodeType === 3) return node.textContent ?? "";
+      if (node.nodeType !== 1) return "";
+      const child = node as Element;
+      if (isSensitive(child)) return "";
+      const content = [...child.childNodes].map(visit).join("");
+      return child.tagName === "SUP" && /^\d{2}$/.test(cleanText(content)) ? `.${cleanText(content)}` : content;
+    }
+    return cleanText(visit(element));
+  }
+
   function numericAmount(raw: string): number {
     const compact = raw.replace(/\s/g, "");
     if (compact.includes(",") && !compact.includes(".")) {
@@ -200,8 +212,8 @@ export function captureCheckoutEvidence(): PageEvidence | null {
       "main output",
     ].join(","));
     const ranked = [...new Set([...platformElements, ...likely])]
-      .map((element) => ({ element, text: cleanText(element.textContent ?? "") }))
-      .filter((candidate) => candidate.text.length > 0 && candidate.text.length <= 220 && amounts(candidate.text).length > 0)
+      .map((element) => ({ element, text: readableText(element) }))
+      .filter((candidate) => candidate.text.length > 0 && candidate.text.length <= 220 && amounts(candidate.text).some((value) => value > 0))
       .map((candidate) => {
         const platform = platformElements.includes(candidate.element);
         return { ...candidate, platform, score: totalScore(candidate.element, candidate.text) + (platform ? 60 : 0) };
@@ -254,9 +266,10 @@ export function captureCheckoutEvidence(): PageEvidence | null {
       : genericElements("tr, li, [role='row'], [class*='line-item' i], [class*='summary' i] > div, main p, main small");
     const seen = new Set<string>();
     return candidates.flatMap((element) => {
-      const text = cleanText(element.textContent ?? "");
+      const text = readableText(element);
       if (text.length === 0 || text.length > 220 || amounts(text).length === 0) return [];
       if (!/(shipping|delivery|tax|service fee|booking fee|processing fee|platform fee|handling fee|surcharge|mandatory fee|运费|配送费|税费|税|服务费|手续费|附加费|versand|lieferung|steuer|servicegebühr|livraison|expédition|taxe|frais de service|envío|impuesto|tarifa de servicio|spedizione|imposta)/i.test(text)) return [];
+      if (/(protection|insurance|warranty|保障|保险).*(without|remove|decline|no thanks|opt.?out|不需要|移除)/i.test(text)) return [];
       if (/(subtotal|grand total|order total|total due|小计|总计|合计|zwischensumme|gesamtbetrag|sous-total|montant total|importe total)/i.test(text)) return [];
       const item = { name: labelWithoutPrice(text).slice(0, 120) || "Mandatory fee", amount: amount(text) };
       const key = `${item.name.toLowerCase()}|${item.amount.toFixed(2)}`;
@@ -269,7 +282,7 @@ export function captureCheckoutEvidence(): PageEvidence | null {
   function choiceFromContainer(element: HTMLElement, index: number, annotated: boolean, suppliedControl?: HTMLInputElement): CapturedChoice | null {
     const control = suppliedControl ?? element.querySelector<HTMLInputElement>("input[type='checkbox'], input[type='radio']");
     if (!control || isSensitive(control)) return null;
-    const text = cleanText(element.textContent ?? "");
+    const text = readableText(element);
     const price = amount(text);
     if (price <= 0 || text.length > 260) return null;
     const declaredDefault = control.dataset.ffDefaultSelected;
@@ -296,10 +309,44 @@ export function captureCheckoutEvidence(): PageEvidence | null {
       return annotated.map((element, index) => choiceFromContainer(element, index, true)).filter((item): item is CapturedChoice => item !== null);
     }
     const controls = genericElements("input[type='checkbox'], input[type='radio']") as HTMLInputElement[];
-    return controls.map((control, index) => {
+    const nativeChoices = controls.map((control, index) => {
       const container = control.closest<HTMLElement>("label, [role='checkbox'], [role='radio'], li, tr, [class*='option' i], [class*='addon' i]") ?? control.parentElement;
       return container ? choiceFromContainer(container, index, false, control) : null;
     }).filter((item): item is CapturedChoice => item !== null).slice(0, 30);
+
+    const customContainers = genericElements([
+      "[id*='protection' i]", "[class*='protection' i]", "[id*='insurance' i]", "[class*='insurance' i]",
+      "[id*='warranty' i]", "[class*='warranty' i]", "[id*='nvd-' i]", "[class*='nvd-' i]",
+    ].join(","));
+    const customChoices: CapturedChoice[] = [];
+    for (const container of customContainers) {
+      const text = readableText(container);
+      if (text.length === 0 || text.length > 1200) continue;
+      if (!/(protection|insurance|warranty|保障|保险)/i.test(text)) continue;
+      const hasOptOut = /(without protection|remove protection|decline|no thanks|opt.?out|checkout without|不需要保障|移除保险)/i.test(text);
+      const hasProtectedPath = /(protected checkout|add protection|include protection|保障结账|加入保险)/i.test(text);
+      if (!hasOptOut || !hasProtectedPath) continue;
+      const priceElements = [...container.querySelectorAll<HTMLElement>("[class*='price' i], [id*='price' i], [data-price]")]
+        .filter(isVisible)
+        .map((element) => ({ text: readableText(element), parsedAmounts: amounts(readableText(element)) }))
+        .filter((candidate) => candidate.parsedAmounts.some((value) => value > 0));
+      const price = priceElements[0]?.parsedAmounts.find((value) => value > 0)
+        ?? amounts(text).filter((value) => value > 0).sort((left, right) => left - right)[0]
+        ?? 0;
+      if (price <= 0) continue;
+      const title = cleanText(container.querySelector<HTMLElement>("h1, h2, h3, h4, [class*='title' i]")?.textContent ?? "Optional protection");
+      const controlId = container.id || `custom-protection-${customChoices.length + 1}`;
+      if (customChoices.some((choice) => choice.controlId === controlId || choice.price === price && choice.label === title)) continue;
+      customChoices.push({
+        controlId,
+        label: title.slice(0, 160),
+        price,
+        selected: true,
+        required: false,
+        selectionOrigin: "page_default",
+      });
+    }
+    return [...nativeChoices, ...customChoices].slice(0, 30);
   }
 
   function renewalCandidates(): CapturedRenewal[] {
@@ -307,7 +354,7 @@ export function captureCheckoutEvidence(): PageEvidence | null {
     const candidates = annotated.length ? annotated : genericElements("main p, main li, main small, main label, main [class*='renew' i], main [class*='subscription' i], main [class*='trial' i]");
     const seen = new Set<string>();
     return candidates.flatMap((element, index) => {
-      const text = cleanText(element.textContent ?? "");
+      const text = readableText(element);
       if (text.length === 0 || text.length > 500 || amounts(text).length === 0) return [];
       if (!/(renew|recurring|subscription|billed|billing|per\s+(?:day|week|month|year)|\/(?:day|week|mo(?:nth)?|yr|year)|after\s+(?:the\s+)?trial|自动续费|续订|订阅|每(?:天|周|月|年)|monatlich|jährlich|verlänger|abonnement|mensuel|annuel|renouvel|suscripción|mensual|anual|renovación)/i.test(text)) return [];
       const intervalRaw = text.match(/(?:per|every|\/|billed\s+)(?:\s*(?:one|1))?\s*(day|week|month|year|mo|yr)s?/i)?.[1]?.toLowerCase();

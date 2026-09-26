@@ -136,3 +136,53 @@ test("treats a visible single-page cart drawer as a new cart step", async () => 
   assert.equal(result.step, 2);
   assert.equal(result.visibleTotal, 9.95);
 });
+
+test("ignores a zero cart counter and reads the product offer", async () => {
+  const result = await loadCapture(`
+    <html><head><title>Mapping Pencil</title>
+      <meta property="product:price:amount" content="7.00">
+      <meta property="product:price:currency" content="USD">
+    </head><body><main><h1>Mapping Pencil</h1><button>0 Cart</button><p>$7.00</p></main></body></html>
+  `, "https://merchant.example/products/pencil");
+
+  assert.equal(result.pageType, "product");
+  assert.equal(result.visibleTotal, 7);
+});
+
+test("preserves cents rendered in a superscript", async () => {
+  const result = await loadCapture(`
+    <html><head><title>Mapping Pencil</title></head><body><main>
+      <h1>Mapping Pencil</h1>
+      <div class="price__regular"><span class="price-item--regular">$7<sup>00</sup></span></div>
+    </main></body></html>
+  `, "https://merchant.example/products/pencil");
+
+  assert.equal(result.visibleTotal, 7);
+});
+
+test("captures button-based default shipping protection as a paid choice", async () => {
+  const result = await loadCapture(`
+    <html><head><title>Your Shopping Cart</title></head><body><main>
+      <h1>Cart</h1>
+      <strong class="order-total">Total $7.00</strong>
+      <div id="nvd-standard-widget-container">
+        <h3>Shipping Protection</h3>
+        <span class="nvd-std-widget-price">$0.98</span>
+        <button>Protected Checkout | $7.98</button>
+        <button>Checkout without protection</button>
+      </div>
+    </main></body></html>
+  `, "https://merchant.example/cart");
+
+  assert.equal(result.pageType, "cart");
+  assert.equal(result.paidChoices.length, 1);
+  assert.deepEqual(result.paidChoices[0], {
+    controlId: "nvd-standard-widget-container",
+    label: "Shipping Protection",
+    price: 0.98,
+    selected: true,
+    required: false,
+    selectionOrigin: "page_default",
+  });
+  assert.equal(result.mandatoryFees.length, 0);
+});
